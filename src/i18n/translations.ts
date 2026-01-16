@@ -96,7 +96,13 @@ export const translations: Record<Language, Translations> = {
     },
     quiz: {
       question: '',
-      of: ' / '
+      of: ' / ',
+      options: {
+        a: '',
+        b: '',
+        c: '',
+        d: ''
+      }
     },
     result: {
       title: '仪式完成',
@@ -159,7 +165,13 @@ export const translations: Record<Language, Translations> = {
     },
     quiz: {
       question: '',
-      of: ' / '
+      of: ' / ',
+      options: {
+        a: '',
+        b: '',
+        c: '',
+        d: ''
+      }
     },
     result: {
       title: 'Ritual Complete',

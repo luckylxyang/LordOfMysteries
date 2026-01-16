@@ -132,7 +132,7 @@ export function generateCommentaryFullEn(
 // Generate personalized motto based on user traits
 export function generateCustomMottoFullEn(
   pathway: Pathway,
-  traits: string[]
+  _traits: string[]
 ): string {
   const defaultMottos = pathway.motto
   return defaultMottos[Math.floor(Math.random() * defaultMottos.length)]

@@ -22,7 +22,7 @@ export default function Home() {
             <span className="divider-line"></span>
           </div>
           <p className="description">
-            {t.home.description.split('\n').map((line, i) => (
+            {t.home.description.split('\n').map((line: string, i: number) => (
               <span key={i}>
                 {line}
                 {i < t.home.description.split('\n').length - 1 && <br />}

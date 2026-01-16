@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { Language, translations } from './translations'
+import { Language, translations, Translations } from './translations'
 
 interface LanguageContextType {
   language: Language
   setLanguage: (lang: Language) => void
-  t: translations[Language]
+  t: Translations
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)

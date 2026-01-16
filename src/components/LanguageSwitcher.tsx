@@ -1,5 +1,4 @@
 import { useLanguage } from '../i18n/LanguageContext'
-import { Language } from '../i18n/translations'
 import './LanguageSwitcher.css'
 
 export default function LanguageSwitcher() {

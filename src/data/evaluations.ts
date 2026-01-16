@@ -43,7 +43,7 @@ export function generateCommentary(
 // 根据用户特质生成个性化格言
 export function generateCustomMotto(
   pathway: Pathway,
-  traits: string[]
+  _traits: string[]
 ): string {
   const defaultMottos = pathway.motto
   return defaultMottos[Math.floor(Math.random() * defaultMottos.length)]

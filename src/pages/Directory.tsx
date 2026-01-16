@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
-import { pathwaysFull, allPathwaysFull } from '../data/pathwaysFull'
-import { pathwaysFullEn, allPathwaysFullEn } from '../data/pathwaysFullEn'
+import { allPathwaysFull } from '../data/pathwaysFull'
+import { allPathwaysFullEn } from '../data/pathwaysFullEn'
 import './Directory.css'
 
 export default function Directory() {

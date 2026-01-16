@@ -1,29 +1,22 @@
 import { useEffect, useState, useMemo } from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import { pathwaysFull } from '../data/pathwaysFull'
 import { pathwaysFullEn } from '../data/pathwaysFullEn'
 import { generateCommentaryFull } from '../data/evaluationsFull'
 import { generateCommentaryFullEn } from '../data/evaluationsFullEn'
 import { generateCardSVG, svgToBlob } from '../utils/clientCardGenerator'
-import { Pathway, QuizResult } from '../types'
+import { Pathway } from '../types'
 import './Result.css'
-
-interface LocationState {
-  scores: Record<string, number>
-  answers: number[]
-}
 
 export default function Result() {
   const { pathwayId } = useParams<{ pathwayId: string }>()
   const navigate = useNavigate()
-  const location = useLocation()
-  const state = location.state as LocationState
   const { language, t } = useLanguage()
 
   const [pathway, setPathway] = useState<Pathway | null>(null)
   const [cardImageUrl, setCardImageUrl] = useState<string>('')
-  const [userName, setUserName] = useState('')
+  const [userName] = useState('')
 
   // 根据语言选择途径数据和评估函数
   const currentPathways = useMemo(() => {

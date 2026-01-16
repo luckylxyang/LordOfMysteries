@@ -1,0 +1,267 @@
+:root {
+  --fog-gray: #2a2a2a;
+  --mystic-purple: #1a0a2e;
+  --deep-void: #0d0d0d;
+  --gold-accent: #c9a227;
+  --parchment: #f4e4bc;
+  --blood-red: #8b0000;
+  --mystic-blue: #1e3a5f;
+  --gray-fog-light: #4a5568;
+  --gray-fog-dark: #2d3748;
+  --mysterious-blue: #1a365d;
+  --source-gold: #d4a54c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  background: #0a0a0f;
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* 灰雾之上 - 符合原著风格的背景 */
+.fog-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* 最上层：微妙的金色光晕 */
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 165, 76, 0.08) 0%, transparent 50%),
+    /* 中层：神秘的蓝色雾气 */
+    radial-gradient(ellipse 60% 40% at 20% 50%, rgba(26, 54, 93, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(26, 54, 93, 0.15) 0%, transparent 50%),
+    /* 底层：深色渐变基础 */
+    linear-gradient(180deg, #0a0a0f 0%, #1a1025 50%, #0f0f1a 100%);
+  animation: fogMove 20s ease-in-out infinite;
+}
+
+/* 灰雾层叠效果 */
+.fog-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    /* 流动的雾气纹理 */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(74, 85, 104, 0.03) 20%,
+      transparent 40%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0%,
+      rgba(74, 85, 104, 0.02) 15%,
+      transparent 30%
+    );
+  animation: fogFlow 30s linear infinite;
+  opacity: 0.7;
+}
+
+/* 神秘的触手/雾气效果 */
+.fog-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse 30% 20% at 10% 20%, rgba(212, 165, 76, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 25% 15% at 90% 30%, rgba(212, 165, 76, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 20% 30% at 50% 80%, rgba(26, 54, 93, 0.08) 0%, transparent 50%);
+  animation: mysteriousGlow 15s ease-in-out infinite alternate;
+}
+
+@keyframes fogMove {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.02);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fogFlow {
+  0% {
+    background-position: 0% 0%, 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%, 100% 100%;
+  }
+}
+
+@keyframes mysteriousGlow {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.pulse-glow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* 源堡风格的边框光效 */
+.mystical-border {
+  position: relative;
+  box-shadow:
+    0 0 40px rgba(212, 165, 76, 0.15),
+    0 0 80px rgba(26, 54, 93, 0.1),
+    inset 0 0 60px rgba(212, 165, 76, 0.03);
+}
+
+.mystical-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(212, 165, 76, 0.3) 50%,
+    transparent 60%
+  );
+  background-size: 200% 200%;
+  animation: borderGlow 4s ease infinite;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 底部灰雾效果 */
+.fog-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    /* 底层：深色渐变 */
+    linear-gradient(to top, #0a0a0f 0%, transparent 40%),
+    /* 雾气层 */
+    radial-gradient(ellipse 80% 100% at 50% 100%, rgba(74, 85, 104, 0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 20% 100%, rgba(74, 85, 104, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 100%, rgba(74, 85, 104, 0.25) 0%, transparent 60%),
+    /* 神秘蓝色雾气 */
+    radial-gradient(ellipse 70% 90% at 30% 100%, rgba(26, 54, 93, 0.2) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 90% at 70% 100%, rgba(26, 54, 93, 0.2) 0%, transparent 65%);
+  animation: fogRise 15s ease-in-out infinite;
+}
+
+/* 灰雾流动效果 */
+.fog-bottom::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(74, 85, 104, 0.05) 15%,
+      transparent 30%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0%,
+      rgba(45, 55, 72, 0.04) 20%,
+      transparent 40%
+    );
+  animation: fogDrift 25s linear infinite;
+  opacity: 0.8;
+}
+
+/* 底部金色微光 */
+.fog-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background:
+    radial-gradient(ellipse 40% 50% at 50% 100%, rgba(212, 165, 76, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 30% 30% at 20% 100%, rgba(212, 165, 76, 0.05) 0%, transparent 40%),
+    radial-gradient(ellipse 30% 30% at 80% 100%, rgba(212, 165, 76, 0.05) 0%, transparent 40%);
+  animation: goldenGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes fogRise {
+  0%, 100% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-15px) scaleY(1.05);
+    opacity: 0.9;
+  }
+}
+
+@keyframes fogDrift {
+  0% {
+    background-position: 0% 0%, 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%, 0% 200%;
+  }
+}
+
+@keyframes goldenGlow {
+  0% {
+    opacity: 0.4;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scaleX(1.1);
+  }
+}

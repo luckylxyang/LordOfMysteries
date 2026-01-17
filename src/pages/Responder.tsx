@@ -72,12 +72,44 @@ export default function Responder() {
     saveUsage(newCount)
     setRemainingFree(Math.max(0, DAILY_FREE_QUESTIONS - newCount))
 
-    // 模拟AI响应（实际应该调用API）
-    setTimeout(() => {
-      const aiResponse = generateRosetteResponse(userMessage, language)
+    try {
+      // 调用 GLM-4 API
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          language: language
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+
+        // 如果 API 调用失败，使用备用响应
+        console.warn('API call failed, using fallback:', errorData)
+        const fallbackResponse = generateRosetteResponse(userMessage, language)
+        setMessages(prev => [...prev, { role: 'ai', content: fallbackResponse }])
+        setIsLoading(false)
+        return
+      }
+
+      const data = await response.json()
+      const aiResponse = data.message
+
       setMessages(prev => [...prev, { role: 'ai', content: aiResponse }])
+
+    } catch (error) {
+      console.error('Chat error:', error)
+
+      // 网络错误或其他异常，使用备用响应
+      const fallbackResponse = generateRosetteResponse(userMessage, language)
+      setMessages(prev => [...prev, { role: 'ai', content: fallbackResponse }])
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
   }
 
   const handleWatchAd = () => {

@@ -4,7 +4,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://lord-of-mysteries.vercel.app/sitemap.xml
+Sitemap: https://lotm.space/sitemap.xml
 
 # Disallow specific paths if needed
 # Disallow: /private/

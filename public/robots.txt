@@ -1,0 +1,11 @@
+# Robots.txt for Lord of the Mysteries Beyonder Quiz
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://lord-of-mysteries.vercel.app/sitemap.xml
+
+# Disallow specific paths if needed
+# Disallow: /private/
+# Disallow: /admin/

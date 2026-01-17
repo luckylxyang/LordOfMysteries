@@ -291,3 +291,92 @@
     justify-content: center;
   }
 }
+
+/* 罗塞尔日记入口 */
+.diary-entry {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+  text-decoration: none;
+  animation: diaryFloat 3s ease-in-out infinite;
+}
+
+@keyframes diaryFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(3deg);
+  }
+}
+
+.diary-book {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diary-cover {
+  font-size: 3rem;
+  filter: drop-shadow(0 4px 15px rgba(201, 162, 39, 0.5));
+  transition: all 0.3s ease;
+}
+
+.diary-sparkle {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 1.2rem;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+.diary-entry:hover .diary-cover {
+  transform: scale(1.1) rotate(-5deg);
+  filter: drop-shadow(0 6px 25px rgba(201, 162, 39, 0.8));
+}
+
+.diary-entry:hover .diary-sparkle {
+  animation: sparkleRapid 0.5s ease-in-out infinite;
+}
+
+@keyframes sparkleRapid {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.8) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3) rotate(180deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .diary-entry {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .diary-book {
+    width: 60px;
+    height: 60px;
+  }
+
+  .diary-cover {
+    font-size: 2.5rem;
+  }
+}

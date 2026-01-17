@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Quiz from './pages/Quiz'
 import Result from './pages/Result'
 import Directory from './pages/Directory'
+import Responder from './pages/Responder'
 import './App.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/result/:pathwayId" element={<Result />} />
             <Route path="/directory" element={<Directory />} />
+            <Route path="/responder" element={<Responder />} />
           </Routes>
         </main>
         <FogBottom />

@@ -51,6 +51,14 @@ export default function Home() {
         <Link to="/directory" className="directory-link">
           {t.home.directoryLink}
         </Link>
+
+        {/* 罗塞尔日记入口 */}
+        <Link to="/responder" className="diary-entry" title={t.home.diaryEntry || 'Roselle\'s Diary'}>
+          <div className="diary-book">
+            <div className="diary-cover">📔</div>
+            <div className="diary-sparkle">✨</div>
+          </div>
+        </Link>
       </div>
     </div>
   )

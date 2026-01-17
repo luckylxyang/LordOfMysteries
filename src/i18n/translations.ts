@@ -10,6 +10,7 @@ export interface Translations {
     shareResult: string
     retest: string
     explorePathways: string
+    close: string
   }
   home: {
     title: string
@@ -22,6 +23,7 @@ export interface Translations {
       directory: string
     }
     directoryLink: string
+    diaryEntry: string
   }
   quiz: {
     question: string
@@ -40,6 +42,19 @@ export interface Translations {
     commentaryTitle: string
     yourPathway: string
     generatingCard: string
+  }
+  responder: {
+    subtitle: string
+    spiritValue: string
+    dailyLimit: string
+    welcome: string
+    examples: string
+    placeholder: string
+    outOfSpirit: string
+    getMoreSpirit: string
+    watchAd: string
+    unlockFull: string
+    unlimitedAccess: string
   }
   directory: {
     title: string
@@ -80,7 +95,8 @@ export const translations: Record<Language, Translations> = {
       saveCard: '保存卡片',
       shareResult: '分享结果',
       retest: '重新测试',
-      explorePathways: '探索二十二条神之途径'
+      explorePathways: '探索二十二条神之途径',
+      close: '关闭'
     },
     home: {
       title: '灰雾之上',
@@ -92,7 +108,8 @@ export const translations: Record<Language, Translations> = {
         identityCard: '身份卡片',
         directory: '途径图鉴'
       },
-      directoryLink: '探索二十二条神之途径 →'
+      directoryLink: '探索二十二条神之途径 →',
+      diaryEntry: '罗塞尔日记'
     },
     quiz: {
       question: '',
@@ -111,6 +128,19 @@ export const translations: Record<Language, Translations> = {
       commentaryTitle: '授职评语',
       yourPathway: '我的非凡途径是：',
       generatingCard: '正在生成身份卡片...'
+    },
+    responder: {
+      subtitle: '罗塞尔日记 AI 问答',
+      spiritValue: '灵性值',
+      dailyLimit: '每日免费',
+      welcome: '欢迎来到灰雾之上。我是罗塞尔日记的守护者。\n你可以向我询问关于诡秘世界的任何问题...',
+      examples: '示例问题',
+      placeholder: '写下你的问题，提交给命运...',
+      outOfSpirit: '灵性值不足',
+      getMoreSpirit: '选择方式获取更多灵性值',
+      watchAd: '观看广告',
+      unlockFull: '解锁完整版',
+      unlimitedAccess: '无限问答 + 完整日记'
     },
     directory: {
       title: '二十二条神之途径',
@@ -149,7 +179,8 @@ export const translations: Record<Language, Translations> = {
       saveCard: 'Save Card',
       shareResult: 'Share Result',
       retest: 'Retest',
-      explorePathways: 'Explore the 22 Divine Pathways'
+      explorePathways: 'Explore the 22 Divine Pathways',
+      close: 'Close'
     },
     home: {
       title: 'Above the Gray Fog',
@@ -161,7 +192,8 @@ export const translations: Record<Language, Translations> = {
         identityCard: 'Identity Card',
         directory: 'Pathway Directory'
       },
-      directoryLink: 'Explore the 22 Divine Pathways →'
+      directoryLink: 'Explore the 22 Divine Pathways →',
+      diaryEntry: 'Roselle\'s Diary'
     },
     quiz: {
       question: '',
@@ -180,6 +212,19 @@ export const translations: Record<Language, Translations> = {
       commentaryTitle: 'Appointment Commentary',
       yourPathway: 'My pathway is:',
       generatingCard: 'Generating identity card...'
+    },
+    responder: {
+      subtitle: 'Roselle\'s Diary AI Q&A',
+      spiritValue: 'Spirituality',
+      dailyLimit: 'Daily Free',
+      welcome: 'Welcome above the gray fog. I am the guardian of Roselle\'s Diary.\nYou may ask me anything about the mysterious world...',
+      examples: 'Example Questions',
+      placeholder: 'Write your question, submit to fate...',
+      outOfSpirit: 'Insufficient Spirituality',
+      getMoreSpirit: 'Choose a way to get more spirituality',
+      watchAd: 'Watch Ad',
+      unlockFull: 'Unlock Full Version',
+      unlimitedAccess: 'Unlimited Q&A + Complete Diary'
     },
     directory: {
       title: 'The 22 Divine Pathways',

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import { generateRosetteResponse } from '../data/rosetteResponses'
 import { sendChatMessage } from '../utils/chatApi'
-import { initAdMob, showRewardedAd } from '../utils/admob'
 import './Responder.css'
 
 const DAILY_FREE_QUESTIONS = 3
@@ -21,7 +20,6 @@ export default function Responder() {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [remainingFree, setRemainingFree] = useState(DAILY_FREE_QUESTIONS)
-  const [showPaymentModal, setShowPaymentModal] = useState(false)
 
   // 加载使用次数并检查日期刷新
   useEffect(() => {
@@ -48,9 +46,6 @@ export default function Responder() {
     }
 
     loadUsage()
-
-    // 初始化 AdMob
-    initAdMob()
 
     // 设置定时器，每分钟检查一次是否跨天（处理用户长时间不刷新页面）
     const checkDateChange = setInterval(() => {
@@ -79,7 +74,7 @@ export default function Responder() {
     if (!input.trim() || isLoading) return
 
     if (remainingFree <= 0) {
-      setShowPaymentModal(true)
+      alert(`${t.responder.outOfSpirit}\n\n每天 0 点自动刷新，请明天再来！`)
       return
     }
 
@@ -117,48 +112,6 @@ export default function Responder() {
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const handleWatchAd = async () => {
-    setShowPaymentModal(false)
-    setIsLoading(true)
-
-    try {
-      const watched = await showRewardedAd()
-
-      if (watched) {
-        // 广告观看完成，增加灵性值
-        setRemainingFree(prev => prev + 3)
-
-        // 更新 localStorage
-        const stored = localStorage.getItem(STORAGE_KEY)
-        if (stored) {
-          const data: UsageData = JSON.parse(stored)
-          const today = new Date().toISOString().split('T')[0]
-
-          if (data.date === today) {
-            // 减少已使用次数（相当于增加剩余次数）
-            const newCount = Math.max(0, data.count - 3)
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: today, count: newCount }))
-          }
-        }
-
-        alert(`🎉 观看完成！灵性值 +3`)
-      } else {
-        alert('广告未完整观看，无法获得奖励')
-      }
-    } catch (error) {
-      console.error('广告播放错误:', error)
-      alert('广告播放失败，请稍后重试')
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const handlePayment = () => {
-    // TODO: 集成支付系统
-    alert('跳转支付页面...（需要集成 Stripe 或其他支付系统）')
-    setShowPaymentModal(false)
   }
 
   return (
@@ -258,35 +211,6 @@ export default function Responder() {
             {isLoading ? '...' : '✧'}
           </button>
         </div>
-
-        {/* 支付弹窗 */}
-        {showPaymentModal && (
-          <div className="payment-modal-overlay" onClick={() => setShowPaymentModal(false)}>
-            <div className="payment-modal" onClick={(e) => e.stopPropagation()}>
-              <h3>{t.responder.outOfSpirit}</h3>
-              <p>{t.responder.getMoreSpirit}:</p>
-              <div className="payment-options">
-                <button className="payment-option ad-option" onClick={handleWatchAd}>
-                  <div className="option-icon">📺</div>
-                  <div className="option-text">
-                    <div className="option-title">{t.responder.watchAd}</div>
-                    <div className="option-desc">+3 {t.responder.spiritValue}</div>
-                  </div>
-                </button>
-                <button className="payment-option pay-option" onClick={handlePayment}>
-                  <div className="option-icon">💎</div>
-                  <div className="option-text">
-                    <div className="option-title">{t.responder.unlockFull}</div>
-                    <div className="option-desc">{t.responder.unlimitedAccess}</div>
-                  </div>
-                </button>
-              </div>
-              <button className="close-modal" onClick={() => setShowPaymentModal(false)}>
-                {t.common.close}
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )

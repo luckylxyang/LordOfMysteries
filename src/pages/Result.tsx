@@ -62,16 +62,36 @@ export default function Result() {
   }
 
   const handleShare = async () => {
-    if (navigator.share && cardImageUrl) {
+    const shareUrl = `https://lotm.space${window.location.pathname}`
+    const shareText = language === 'en'
+      ? `I got "${pathway?.name}" in the Beyonder Assessment!\n\n${t.result.yourPathway} ${pathway?.name}\n\nTake the test: ${shareUrl}`
+      : `我在非凡者评估中获得了「${pathway?.name}」！\n\n${t.result.yourPathway} ${pathway?.name}\n\n来测测你的途径：${shareUrl}`
+
+    // 尝试使用原生分享 API
+    if (navigator.share) {
       try {
         await navigator.share({
           title: language === 'en' ? 'Above the Gray Fog - Beyonder Assessment' : '灰雾之上 - 非凡者评估',
-          text: `${t.result.yourPathway} ${pathway?.name}`,
-          url: window.location.href,
+          text: shareText,
+          url: shareUrl,
         })
+        return
       } catch (error) {
         console.log('Share cancelled or failed:', error)
       }
+    }
+
+    // 备用方案：复制到剪贴板
+    try {
+      await navigator.clipboard.writeText(shareText)
+      alert(language === 'en' ? 'Link copied to clipboard!' : '链接已复制到剪贴板！')
+    } catch (error) {
+      console.error('Failed to copy:', error)
+      // 最后的备用方案：手动提示
+      prompt(
+        language === 'en' ? 'Copy this link to share:' : '复制此链接分享：',
+        shareUrl
+      )
     }
   }
 

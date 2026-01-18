@@ -95,8 +95,13 @@ export function generateCardSVG(
       `).join('')}
 
       <!-- 底部装饰 -->
-      <text x="210" y="250" text-anchor="middle" font-size="14" fill="rgba(201, 162, 39, 0.5)">
+      <text x="210" y="245" text-anchor="middle" font-size="14" fill="rgba(201, 162, 39, 0.5)">
         ⚜ Above the Gray Fog ⚜
+      </text>
+
+      <!-- 网站水印 -->
+      <text x="210" y="268" text-anchor="middle" font-size="10" fill="rgba(201, 162, 39, 0.4)">
+        lotm.space
       </text>
     </svg>
   `

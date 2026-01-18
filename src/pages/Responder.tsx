@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import { generateRosetteResponse } from '../data/rosetteResponses'
 import { sendChatMessage } from '../utils/chatApi'
+import { playQuillSound } from '../utils/sounds'
 import './Responder.css'
 
 const DAILY_FREE_QUESTIONS = 30
@@ -20,6 +21,14 @@ export default function Responder() {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [remainingFree, setRemainingFree] = useState(DAILY_FREE_QUESTIONS)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
+
+  // 自动滚动到底部
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
+    }
+  }, [messages, isLoading])
 
   // 加载使用次数并检查日期刷新
   useEffect(() => {
@@ -77,6 +86,9 @@ export default function Responder() {
       alert(`${t.responder.outOfSpirit}\n\n每天 0 点自动刷新，请明天再来！`)
       return
     }
+
+    // 播放羽毛笔音效
+    playQuillSound()
 
     const userMessage = input.trim()
     setInput('')
@@ -141,7 +153,7 @@ export default function Responder() {
         </div>
 
         {/* 消息列表 */}
-        <div className="messages-container">
+        <div className="messages-container" ref={messagesContainerRef}>
           {messages.length === 0 && (
             <div className="welcome-message">
               <p>{t.responder.welcome}</p>

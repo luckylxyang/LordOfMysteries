@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import { generateRosetteResponse } from '../data/rosetteResponses'
 import { sendChatMessage } from '../utils/chatApi'
+import { initAdMob, showRewardedAd } from '../utils/admob'
 import './Responder.css'
 
 const DAILY_FREE_QUESTIONS = 3
@@ -47,6 +48,9 @@ export default function Responder() {
     }
 
     loadUsage()
+
+    // 初始化 AdMob
+    initAdMob()
 
     // 设置定时器，每分钟检查一次是否跨天（处理用户长时间不刷新页面）
     const checkDateChange = setInterval(() => {
@@ -115,11 +119,40 @@ export default function Responder() {
     }
   }
 
-  const handleWatchAd = () => {
-    // TODO: 集成激励视频广告
-    alert('广告播放中...（需要集成 AdMob 或其他广告SDK）')
+  const handleWatchAd = async () => {
     setShowPaymentModal(false)
-    setRemainingFree(prev => prev + 3)
+    setIsLoading(true)
+
+    try {
+      const watched = await showRewardedAd()
+
+      if (watched) {
+        // 广告观看完成，增加灵性值
+        setRemainingFree(prev => prev + 3)
+
+        // 更新 localStorage
+        const stored = localStorage.getItem(STORAGE_KEY)
+        if (stored) {
+          const data: UsageData = JSON.parse(stored)
+          const today = new Date().toISOString().split('T')[0]
+
+          if (data.date === today) {
+            // 减少已使用次数（相当于增加剩余次数）
+            const newCount = Math.max(0, data.count - 3)
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: today, count: newCount }))
+          }
+        }
+
+        alert(`🎉 观看完成！灵性值 +3`)
+      } else {
+        alert('广告未完整观看，无法获得奖励')
+      }
+    } catch (error) {
+      console.error('广告播放错误:', error)
+      alert('广告播放失败，请稍后重试')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handlePayment = () => {

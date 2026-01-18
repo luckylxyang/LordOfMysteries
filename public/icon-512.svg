@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="fogGradientLarge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c9a227;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d4af37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b6914;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#d4af37;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#d4af37;stop-opacity:0" />
+    </radialGradient>
+    <filter id="glowLarge">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="512" height="512" fill="#0a0612" rx="64"/>
+
+  <!-- 光晕效果 -->
+  <circle cx="256" cy="256" r="200" fill="url(#glowGradient)"/>
+
+  <!-- 灰雾效果 - 多层同心圆 -->
+  <g filter="url(#glowLarge)">
+    <circle cx="256" cy="256" r="220" fill="none" stroke="url(#fogGradientLarge)" stroke-width="2" opacity="0.25"/>
+    <circle cx="256" cy="256" r="190" fill="none" stroke="url(#fogGradientLarge)" stroke-width="2" opacity="0.3"/>
+    <circle cx="256" cy="256" r="160" fill="none" stroke="url(#fogGradientLarge)" stroke-width="2.5" opacity="0.35"/>
+    <circle cx="256" cy="256" r="130" fill="none" stroke="url(#fogGradientLarge)" stroke-width="3" opacity="0.4"/>
+    <circle cx="256" cy="256" r="100" fill="none" stroke="url(#fogGradientLarge)" stroke-width="3.5" opacity="0.45"/>
+  </g>
+
+  <!-- 塔罗牌符号 - 复杂螺旋 -->
+  <g filter="url(#glowLarge)">
+    <path d="M 256 256
+             m 0 0
+             a 80 80 0 0 0 60 -25
+             a 60 60 0 0 0 -35 -75
+             a 45 45 0 0 0 -25 60
+             a 30 30 0 0 0 15 40"
+          fill="none"
+          stroke="url(#fogGradientLarge)"
+          stroke-width="6"
+          stroke-linecap="round"/>
+
+    <path d="M 256 256
+             m 0 0
+             a 50 50 0 0 1 -35 -15
+             a 35 35 0 0 1 20 -45
+             a 25 25 0 0 1 15 35
+             a 15 15 0 0 1 -10 20"
+          fill="none"
+          stroke="url(#fogGradientLarge)"
+          stroke-width="4"
+          stroke-linecap="round"
+          opacity="0.7"/>
+  </g>
+
+  <!-- 中心核心 - 灵性之源 -->
+  <g filter="url(#glowLarge)">
+    <circle cx="256" cy="256" r="25" fill="url(#fogGradientLarge)" opacity="0.9"/>
+    <circle cx="256" cy="256" r="15" fill="#d4af37" opacity="0.95"/>
+    <circle cx="256" cy="256" r="8" fill="#f4e4bc"/>
+  </g>
+
+  <!-- 装饰性符号 - 神秘学图案 -->
+  <g fill="url(#fogGradientLarge)" opacity="0.6">
+    <!-- 上下左右四个方向 -->
+    <circle cx="256" cy="100" r="8"/>
+    <circle cx="256" cy="412" r="8"/>
+    <circle cx="100" cy="256" r="8"/>
+    <circle cx="412" cy="256" r="8"/>
+
+    <!-- 对角线方向 -->
+    <circle cx="148" cy="148" r="5" opacity="0.8"/>
+    <circle cx="364" cy="148" r="5" opacity="0.8"/>
+    <circle cx="148" cy="364" r="5" opacity="0.8"/>
+    <circle cx="364" cy="364" r="5" opacity="0.8"/>
+
+    <!-- 小星星点缀 -->
+    <circle cx="180" cy="256" r="3" opacity="0.5"/>
+    <circle cx="332" cy="256" r="3" opacity="0.5"/>
+    <circle cx="256" cy="180" r="3" opacity="0.5"/>
+    <circle cx="256" cy="332" r="3" opacity="0.5"/>
+  </g>
+
+  <!-- 外围装饰环 -->
+  <circle cx="256" cy="256" r="235" fill="none" stroke="url(#fogGradientLarge)" stroke-width="1" opacity="0.15" stroke-dasharray="8 4"/>
+</svg>

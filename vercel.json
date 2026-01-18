@@ -16,8 +16,5 @@
     "api/**/*.ts": {
       "runtime": "nodejs20.x"
     }
-  },
-  "env": {
-    "GLM_API_KEY": "@glm-api-key"
   }
 }

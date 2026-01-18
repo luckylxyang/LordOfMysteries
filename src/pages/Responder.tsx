@@ -5,7 +5,7 @@ import { generateRosetteResponse } from '../data/rosetteResponses'
 import { sendChatMessage } from '../utils/chatApi'
 import './Responder.css'
 
-const DAILY_FREE_QUESTIONS = 3
+const DAILY_FREE_QUESTIONS = 30
 const STORAGE_KEY = 'responder-usage'
 
 interface UsageData {

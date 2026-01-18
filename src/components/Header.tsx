@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
+import GoogleAuth from './GoogleAuth'
 import './Header.css'
 
 export default function Header() {
@@ -17,7 +18,10 @@ export default function Header() {
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/directory" className="nav-link">{t.common.explorePathways}</Link>
         </nav>
-        <LanguageSwitcher />
+        <div className="header-actions">
+          <GoogleAuth />
+          <LanguageSwitcher />
+        </div>
       </div>
     </header>
   )

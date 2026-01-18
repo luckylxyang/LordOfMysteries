@@ -93,6 +93,12 @@
   width: 100%;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 @media (max-width: 768px) {
   .header-content {
     padding: 0.875rem 1rem;

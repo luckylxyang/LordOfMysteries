@@ -7,6 +7,7 @@ import Quiz from './pages/Quiz'
 import Result from './pages/Result'
 import Directory from './pages/Directory'
 import Responder from './pages/Responder'
+import AuthCallback from './pages/AuthCallback'
 import './App.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/result/:pathwayId" element={<Result />} />
             <Route path="/directory" element={<Directory />} />
             <Route path="/responder" element={<Responder />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
           </Routes>
         </main>
         <FogBottom />

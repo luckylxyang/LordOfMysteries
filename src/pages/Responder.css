@@ -90,6 +90,13 @@
   margin-left: 0.5rem;
 }
 
+.refresh-tip {
+  color: rgba(244, 228, 188, 0.5);
+  font-size: 0.75rem;
+  margin-left: 0.75rem;
+  font-style: italic;
+}
+
 /* 消息容器 */
 .messages-container {
   flex: 1;

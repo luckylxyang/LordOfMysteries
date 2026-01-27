@@ -1,180 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- 首页 -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- 首页 Homepage -->
   <url>
     <loc>https://lotm.space/</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://lotm.space/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lotm.space/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lotm.space/" />
   </url>
 
-  <!-- 测试页面 -->
+  <!-- 测试页面 Quiz -->
   <url>
     <loc>https://lotm.space/quiz</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://lotm.space/quiz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lotm.space/quiz" />
   </url>
 
-  <!-- 途径目录 -->
+  <!-- 途径目录 Pathway Directory -->
   <url>
     <loc>https://lotm.space/directory</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://lotm.space/directory" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lotm.space/directory" />
   </url>
 
-  <!-- 22条神之途径结果页面 -->
+  <!-- 罗塞尔日记 AI问答 Roselle's Diary -->
+  <url>
+    <loc>https://lotm.space/responder</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://lotm.space/responder" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lotm.space/responder" />
+  </url>
+
+  <!-- 剧情搜索 Plot Search (NEW) -->
+  <url>
+    <loc>https://lotm.space/plot-search</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://lotm.space/plot-search" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lotm.space/plot-search" />
+  </url>
+
+  <!-- 22条神之途径结果页面 Pathway Results -->
   <url>
     <loc>https://lotm.space/result/seer</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/thief</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/prayer</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/audience</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/nightmare</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/sailor</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/apprentice</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/philosopher</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/arbiter</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/hunter</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/collector</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/archaeologist</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/assassin</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/tiller</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/captain</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/waterGhost</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/pharmacist</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/ranger</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/warrior</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/reader</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/seerHidden</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://lotm.space/result/reasoner</loc>
-    <lastmod>2025-01-16</lastmod>
+    <lastmod>2025-01-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

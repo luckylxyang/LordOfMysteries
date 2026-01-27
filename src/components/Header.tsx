@@ -17,6 +17,9 @@ export default function Header() {
         <nav className="nav">
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/directory" className="nav-link">{t.common.explorePathways}</Link>
+          <Link to="/plot-search" className="nav-link">
+            {t.common.plotSearch || 'Plot Search'}
+          </Link>
         </nav>
         <div className="header-actions">
           <GoogleAuth />

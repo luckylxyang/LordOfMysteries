@@ -10,6 +10,7 @@ export interface Translations {
     shareResult: string
     retest: string
     explorePathways: string
+    plotSearch: string
     close: string
   }
   home: {
@@ -96,6 +97,7 @@ export const translations: Record<Language, Translations> = {
       shareResult: '分享结果',
       retest: '重新测试',
       explorePathways: '探索二十二条神之途径',
+      plotSearch: '剧情搜索',
       close: '关闭'
     },
     home: {
@@ -180,6 +182,7 @@ export const translations: Record<Language, Translations> = {
       shareResult: 'Share Result',
       retest: 'Retest',
       explorePathways: 'Explore the 22 Divine Pathways',
+      plotSearch: 'Plot Search',
       close: 'Close'
     },
     home: {

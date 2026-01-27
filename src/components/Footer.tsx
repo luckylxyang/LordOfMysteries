@@ -39,9 +39,6 @@ export default function Footer() {
             {language === 'en' ? 'Links' : '链接'}
           </h3>
           <div className="footer-links">
-            <a href="https://github.com/luckylxyang/LordOfMysteries" target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
             <a href="/directory">
               {language === 'en' ? 'Pathways' : '途径图鉴'}
             </a>

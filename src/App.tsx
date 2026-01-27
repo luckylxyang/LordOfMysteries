@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { LanguageProvider } from './i18n/LanguageContext'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import FogBottom from './components/FogBottom'
 import Home from './pages/Home'
 import Quiz from './pages/Quiz'
@@ -27,6 +28,7 @@ function App() {
             <Route path="/auth/callback" element={<AuthCallback />} />
           </Routes>
         </main>
+        <Footer />
         <FogBottom />
       </div>
     </LanguageProvider>

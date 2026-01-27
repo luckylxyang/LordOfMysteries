@@ -1,0 +1,316 @@
+.footer {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(15, 52, 96, 0.95) 100%);
+  border-top: 2px solid rgba(201, 169, 89, 0.3);
+  padding: 3rem 1rem;
+  margin-top: 4rem;
+  position: relative;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(201, 169, 89, 0.5) 50%,
+    transparent 100%
+  );
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.footer-section {
+  padding: 0 1rem;
+}
+
+.footer-title {
+  color: #c9a959;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-family: 'Georgia', serif;
+  text-align: center;
+}
+
+.footer-description {
+  color: #b8a88a;
+  text-align: center;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.footer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.footer-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid;
+  background: transparent;
+  font-weight: 500;
+}
+
+.github-button {
+  border-color: rgba(139, 115, 85, 0.4);
+  color: #c9a959;
+}
+
+.github-button:hover {
+  background: rgba(201, 169, 89, 0.1);
+  border-color: #c9a959;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 169, 89, 0.2);
+}
+
+.email-button {
+  border-color: rgba(155, 89, 182, 0.4);
+  color: #daa5ff;
+}
+
+.email-button:hover {
+  background: rgba(155, 89, 182, 0.1);
+  border-color: #daa5ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(155, 89, 182, 0.2);
+}
+
+.button-icon {
+  font-size: 1.3rem;
+}
+
+.button-text {
+  font-size: 0.95rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.footer-links a {
+  color: #b8a88a;
+  text-decoration: none;
+  transition: all 0.3s;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.footer-links a:hover {
+  color: #c9a959;
+  background: rgba(201, 169, 89, 0.1);
+  transform: translateX(5px);
+}
+
+.footer-text {
+  color: #b8a88a;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.footer-copyright {
+  color: #8b7355;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+/* 反馈模态框 */
+.feedback-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.feedback-modal {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.98) 0%, rgba(15, 52, 96, 0.98) 100%);
+  border: 2px solid rgba(201, 169, 89, 0.4);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease-out;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.feedback-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.feedback-modal-header h2 {
+  color: #c9a959;
+  font-size: 1.5rem;
+  margin: 0;
+  font-family: 'Georgia', serif;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #8b7355;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.modal-close:hover {
+  color: #c9a959;
+}
+
+.feedback-modal-body {
+  text-align: center;
+}
+
+.feedback-hint {
+  color: #b8a88a;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.feedback-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feedback-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  background: rgba(201, 169, 89, 0.05);
+  border: 2px solid rgba(201, 169, 89, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  width: 100%;
+}
+
+.feedback-option:hover {
+  background: rgba(201, 169, 89, 0.1);
+  border-color: rgba(201, 169, 89, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 169, 89, 0.15);
+}
+
+.option-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.option-content h4 {
+  color: #c9a959;
+  margin: 0 0 0.3rem 0;
+  font-size: 1.1rem;
+}
+
+.option-content p {
+  color: #b8a88a;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 1rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-title {
+    font-size: 1.1rem;
+  }
+
+  .feedback-modal {
+    padding: 1.5rem;
+  }
+
+  .feedback-modal-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .feedback-option {
+    padding: 1rem;
+  }
+}
+
+/* 滚动条样式 */
+.feedback-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.feedback-modal::-webkit-scrollbar-track {
+  background: rgba(26, 26, 46, 0.5);
+  border-radius: 4px;
+}
+
+.feedback-modal::-webkit-scrollbar-thumb {
+  background: rgba(201, 169, 89, 0.3);
+  border-radius: 4px;
+}
+
+.feedback-modal::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 169, 89, 0.5);
+}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
 import { searchChapters, type ChapterPlot } from '../data/chaptersTemplate'
 import chapters from '../data/chapters'
+import chaptersEn from '../data/chaptersEn'
 import { analyzePlotQuery as aiAnalyzePlotQuery } from '../utils/chatApi'
 import './PlotSearch.css'
 
@@ -14,8 +15,10 @@ export default function PlotSearch() {
   const [hasSearched, setHasSearched] = useState(false)
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null)
 
-  // 导入真实的章节数据
-  const allChapters: ChapterPlot[] = useMemo(() => chapters, [])
+  // 根据语言导入对应的章节数据
+  const allChapters: ChapterPlot[] = useMemo(() => {
+    return language === 'en' ? chaptersEn : chapters
+  }, [language])
 
   // 执行搜索
   const performSearch = useCallback(async (searchQuery: string) => {
@@ -97,7 +100,9 @@ export default function PlotSearch() {
     { zh: "克莱恩第一次遇见阿蒙", en: "When does Klein first meet Amon" },
     { zh: "塔罗会第一次聚会", en: "First Tarot Club gathering" },
     { zh: "克莱恩成为诡秘之主", en: "Klein becomes the Lord of Mysteries" },
-    { zh: "真实造物主篇章", en: "True Creator storyline" }
+    { zh: "真实造物主篇章", en: "True Creator storyline" },
+    { zh: "穿越开局", en: "Transmigration beginning" },
+    { zh: "阿兹克老师", en: "Teacher Azik" }
   ]
 
   return (

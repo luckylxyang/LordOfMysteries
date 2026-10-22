@@ -45,6 +45,9 @@ export default function Directory() {
               <p className="pathway-card-description">
                 {isEnglish ? 'Sequence 0' : '序列 0'} · {pathway.deity}
               </p>
+              <Link to={`/directory/${pathway.id}`} className="test-pathway-link">
+                {isEnglish ? 'Explore pathway →' : '查看途径与序列 →'}
+              </Link>
             </article>
           ))}
         </div>

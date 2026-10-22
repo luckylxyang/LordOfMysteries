@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Quiz from './pages/Quiz'
 import Result from './pages/Result'
 import Directory from './pages/Directory'
+import PathwayDetail from './pages/PathwayDetail'
 import Responder from './pages/Responder'
 import PlotSearch from './pages/PlotSearch'
 import AuthCallback from './pages/AuthCallback'
@@ -23,6 +24,7 @@ function App() {
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/result/:pathwayId" element={<Result />} />
             <Route path="/directory" element={<Directory />} />
+            <Route path="/directory/:pathwayId" element={<PathwayDetail />} />
             <Route path="/responder" element={<Responder />} />
             <Route path="/plot-search" element={<PlotSearch />} />
             <Route path="/auth/callback" element={<AuthCallback />} />

@@ -240,7 +240,7 @@ export const translations: Record<Language, Translations> = {
         },
         choice: {
           title: 'Choosing a Pathway',
-          content: 'The choice of pathway depends on individual talent, personality, and opportunity. Some are naturally aligned with certain pathways, while others find their path through exploration. The site's personality assessment is for entertainment only and is not part of the original lore.'
+          content: 'The choice of pathway depends on individual talent, personality, and opportunity. Some are naturally aligned with certain pathways, while others find their path through exploration. This personality assessment is for entertainment only and is not part of the original lore.'
         },
         mvp: {
           title: 'Available Pathways in MVP',

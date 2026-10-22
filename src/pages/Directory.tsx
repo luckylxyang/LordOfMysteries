@@ -1,17 +1,18 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext'
-import { allPathwaysFull } from '../data/pathwaysFull'
-import { allPathwaysFullEn } from '../data/pathwaysFullEn'
+import { canonicalPathways } from '../data/canonicalPathways'
 import './Directory.css'
 
 export default function Directory() {
   const { t, language } = useLanguage()
+  const isEnglish = language === 'en'
 
-  // 根据语言选择途径数据 - 现在显示全部22条途径
-  const currentPathways = useMemo(() => {
-    return language === 'en' ? allPathwaysFullEn : allPathwaysFull
-  }, [language])
+  const currentPathways = useMemo(() => canonicalPathways.map((pathway) => ({
+    ...pathway,
+    name: isEnglish ? pathway.sequence9En : pathway.sequence9,
+    deity: isEnglish ? pathway.sequence0En : pathway.sequence0,
+  })), [isEnglish])
 
   return (
     <div className="directory-container">
@@ -28,67 +29,35 @@ export default function Directory() {
         </div>
 
         <div className="directory-intro">
-          <p className="intro-text">
-            {t.directory.intro}
-          </p>
+          <p className="intro-text">{t.directory.intro}</p>
         </div>
 
         <div className="pathways-grid">
           {currentPathways.map((pathway) => (
-            <div key={pathway.id} className="pathway-card">
+            <article key={pathway.id} className="pathway-card">
               <div className="pathway-card-header">
-                <span className="pathway-symbol">{pathway.symbol}</span>
+                <span className="pathway-symbol" aria-hidden="true">{pathway.symbol}</span>
                 <div className="pathway-meta">
                   <h3 className="pathway-card-name">{pathway.name}</h3>
-                  <span className="sequence-badge">
-                    {t.result.sequence} {pathway.sequence}
-                  </span>
+                  <span className="sequence-badge">{t.result.sequence} 9</span>
                 </div>
               </div>
-              <p className="pathway-card-description">{pathway.description}</p>
-              <ul className="pathway-features">
-                {pathway.characteristics.slice(0, 3).map((feature, index) => (
-                  <li key={index} className="feature-item">
-                    <span className="feature-bullet">✦</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/quiz" className="test-pathway-link">
-                {t.directory.testPathway}
-              </Link>
-            </div>
+              <p className="pathway-card-description">
+                {isEnglish ? 'Sequence 0' : '序列 0'} · {pathway.deity}
+              </p>
+            </article>
           ))}
         </div>
 
         <div className="seo-content">
-          <h2 className="section-heading">关于途径体系</h2>
+          <h2 className="section-heading">{isEnglish ? 'About the Sequence System' : '关于序列体系'}</h2>
           <div className="content-block">
             <h3 className="subsection-title">{t.directory.sections.advancement.title}</h3>
-            <p className="content-text">
-              {t.directory.sections.advancement.content}
-            </p>
+            <p className="content-text">{t.directory.sections.advancement.content}</p>
           </div>
-
-          <div className="content-block">
-            <h3 className="subsection-title">{t.directory.sections.choice.title}</h3>
-            <p className="content-text">
-              {t.directory.sections.choice.content}
-            </p>
-          </div>
-
-          <div className="content-block">
-            <h3 className="subsection-title">{t.directory.sections.mvp.title}</h3>
-            <p className="content-text">
-              {t.directory.sections.mvp.content}
-            </p>
-          </div>
-
           <div className="content-block">
             <h3 className="subsection-title">{t.directory.sections.knowledge.title}</h3>
-            <p className="content-text">
-              {t.directory.sections.knowledge.content}
-            </p>
+            <p className="content-text">{t.directory.sections.knowledge.content}</p>
           </div>
         </div>
 

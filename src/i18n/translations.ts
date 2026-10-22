@@ -151,19 +151,19 @@ export const translations: Record<Language, Translations> = {
       sections: {
         advancement: {
           title: '序列的晋升',
-          content: '非凡者通过消化魔药晋升到更高序列。每一条途径从序列9开始，逐步掌握更强的能力。序列8是中序列，序列4是高序列，而序列0即是真神（神灵）。'
+          content: '非凡者通过消化魔药晋升到更高序列。每一条途径从序列9开始，逐步掌握更强的能力。序列9与序列8属于低序列，序列7至序列5属于中序列，序列4至序列1属于高序列，序列0为真神。'
         },
         choice: {
           title: '途径的选择',
-          content: '选择哪条途径取决于个人的天赋、性格和机遇。有些人天生就与某条途径契合，而有些人则会在探索中找到属于自己的道路。通过上方的评估测试，你可以发现自己最契合的非凡途径。'
+          content: '选择哪条途径取决于个人的天赋、性格和机遇。有些人天生就与某条途径契合，而有些人则会在探索中找到属于自己的道路。本站的性格测试仅供娱乐，不属于原著设定。'
         },
         mvp: {
           title: 'MVP 提供的途径',
-          content: '本版本提供五条核心途径的评估：占卜家、观众、学徒、猎人和仲裁人。这五条途径涵盖了神秘学、心理操控、空间能力、战斗能力和规则操控等不同方向。后续版本将逐步开放全部二十二条途径。'
+          content: '图鉴展示原著二十二条途径的序列9和序列0名称；性格评估属于非官方娱乐互动，不代表原著中的途径选择机制。'
         },
         knowledge: {
           title: '神秘学知识',
-          content: '二十二条途径由造物主遗留的权能演化而来。每条途径都有其独特的特性、能力体系和文化背景。了解这些知识有助于非凡者更好地掌握自己的力量，避免在失控的边缘徘徊。'
+          content: '二十二条途径由造物主遗留的权能演化而来。每条途径都有其独特的特性、能力体系和文化背景。了解这些知识有助于非凡者更好地掌握自己的力量，理解不同序列的界限。'
         }
       },
       cta: {
@@ -236,19 +236,19 @@ export const translations: Record<Language, Translations> = {
       sections: {
         advancement: {
           title: 'Sequence Advancement',
-          content: 'Beyonders advance to higher sequences by digesting potions. Each pathway starts at Sequence 9, gradually mastering stronger abilities. Sequence 8 is the Middle Sequence, Sequence 4 is the High Sequence, while Sequence 0 is the True God (Deity).'
+          content: 'Beyonders advance to higher sequences by digesting potions. Each pathway starts at Sequence 9, gradually mastering stronger abilities. Sequences 9–8 are Low Sequences, 7–5 are Mid Sequences, 4–1 are High Sequences, and Sequence 0 is a True God.'
         },
         choice: {
           title: 'Choosing a Pathway',
-          content: 'The choice of pathway depends on individual talent, personality, and opportunity. Some are naturally aligned with certain pathways, while others find their path through exploration. Through the assessment test above, you can discover your most compatible pathway.'
+          content: 'The choice of pathway depends on individual talent, personality, and opportunity. Some are naturally aligned with certain pathways, while others find their path through exploration. This personality assessment is for entertainment only and is not part of the original lore.'
         },
         mvp: {
           title: 'Available Pathways in MVP',
-          content: 'This version provides assessment for five core pathways: Seer, Audience, Apprentice, Hunter, and Arbiter. These five pathways cover mysticism, mental manipulation, spatial abilities, combat prowess, and rule manipulation. Future versions will gradually unlock all twenty-two pathways.'
+          content: 'The directory lists the Sequence 9 and Sequence 0 names of the 22 original pathways. The personality assessment is an unofficial entertainment feature, not an in-universe method of choosing a pathway.'
         },
         knowledge: {
           title: 'Mystical Knowledge',
-          content: 'The twenty-two pathways evolved from the powers left by the Creator. Each pathway has its unique characteristics, ability system, and cultural background. Understanding this knowledge helps Beyonders better master their powers and avoid straying into失控.'
+          content: 'The twenty-two pathways evolved from the powers left by the Creator. Each pathway has its unique characteristics, ability system, and cultural background. Understanding this knowledge helps Beyonders better master their powers and understand the boundaries between sequences.'
         }
       },
       cta: {

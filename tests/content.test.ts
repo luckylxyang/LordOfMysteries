@@ -4,7 +4,8 @@ import { pathways, groups, sources, actingMethod } from "../src/data/canon";
 import { chapterIndex, searchChapters } from "../src/data/chapterIndex";
 import {
   resolvePathway,
-  canRead,
+  pathwayLabel,
+  normalizeReading,
   initialReading,
 } from "../src/domain/exploration";
 test("22 complete Sequence ladders have bilingual names and resolvable evidence", () => {
@@ -70,13 +71,26 @@ test("Chapter evidence applies to a specific field and cannot certify a whole Se
   assert.equal(gravedigger.evidence.advancement.status, "pending");
   assert.deepEqual(actingMethod.sourceIds, ["novel-21"]);
 });
-test("Legacy links and default reading depth never silently promote invented paths", () => {
+test("Legacy links keep reliable mappings and all pathway names are visible", () => {
   assert.equal(resolvePathway("seer")?.id, "fool");
   assert.equal(resolvePathway("nightmare")?.id, "darkness");
   assert.equal(resolvePathway("prayer")?.id, "sun");
   assert.equal(resolvePathway("philosopher"), undefined);
-  assert.equal(canRead(9, initialReading), true);
-  assert.equal(canRead(0, initialReading), false);
+  for (const p of pathways) {
+    assert.equal(pathwayLabel(p, "zh"), p.name.zh);
+    assert.equal(pathwayLabel(p, "en"), p.name.en);
+  }
+  assert.deepEqual(normalizeReading(undefined), initialReading);
+  assert.deepEqual(
+    normalizeReading({
+      chapter: 1,
+      floor: 9,
+      chosen: false,
+      reducedMotion: true,
+    }),
+    { reducedMotion: true },
+  );
+  assert.deepEqual(normalizeReading({ reducedMotion: "true" }), initialReading);
 });
 test("Search excludes contradictory legacy chapter records and cites matched entries", () => {
   assert.equal(

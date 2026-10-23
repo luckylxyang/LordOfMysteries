@@ -846,21 +846,6 @@ small {
   white-space: nowrap;
   font-size: 12px;
 }
-.sealed {
-  padding: 25px 20px;
-  text-align: center;
-  background: radial-gradient(ellipse, #7e9b9814, transparent 75%);
-  border: 1px solid var(--line);
-}
-.sealed p {
-  font-size: 12px;
-  color: #a8b8ae;
-  margin: 12px 0 18px;
-}
-.seal-mark {
-  color: #c4b484;
-  font-size: 30px;
-}
 .source-links {
   display: flex;
   flex-wrap: wrap;
@@ -1534,7 +1519,7 @@ small {
 .empty-state .button {
   margin-top: 20px;
 }
-.reading-dialog {
+.motion-dialog {
   max-width: 520px;
   width: calc(100% - 40px);
   background: #142121;
@@ -1544,20 +1529,20 @@ small {
   padding: 38px;
   box-shadow: 0 30px 120px #0009;
 }
-.reading-dialog::backdrop {
+.motion-dialog::backdrop {
   background: #030b0dd9;
   backdrop-filter: blur(10px);
 }
-.reading-dialog h2 {
+.motion-dialog h2 {
   font-size: 30px;
   margin: 18px 0;
 }
-.reading-dialog > p {
+.motion-dialog > p {
   font-size: 13px;
   color: var(--muted);
   margin-bottom: 25px;
 }
-.reading-dialog label {
+.motion-dialog label {
   margin: 20px 0;
 }
 .check-line {
@@ -1565,7 +1550,7 @@ small {
   align-items: center;
   gap: 12px;
 }
-.reading-dialog .button {
+.motion-dialog .button {
   width: 100%;
   margin-top: 10px;
 }
@@ -2253,13 +2238,13 @@ small {
   .history-row > span:last-child {
     font-size: 10px;
   }
-  .reading-dialog {
+  .motion-dialog {
     padding: 26px;
   }
-  .reading-dialog h2 {
+  .motion-dialog h2 {
     font-size: 26px;
   }
-  .reading-dialog label {
+  .motion-dialog label {
     font-size: 12px;
   }
   .search-panel {

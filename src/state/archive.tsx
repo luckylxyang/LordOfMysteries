@@ -15,6 +15,7 @@ import {
 } from "../utils/supabaseClient";
 import {
   initialReading,
+  normalizeReading,
   validateSnapshot,
   type Reading,
   type Snapshot,
@@ -72,19 +73,7 @@ export function sanitizeArchive(value: unknown): Archive {
     chosenPathway: pathwayIds.has(v.chosenPathway || "")
       ? v.chosenPathway!
       : "",
-    reading: {
-      chapter: Math.floor(
-        Math.max(1, Math.min(1432, Number(v.reading?.chapter) || 1)),
-      ),
-      floor:
-        Number.isInteger(v.reading?.floor) &&
-        v.reading!.floor >= 0 &&
-        v.reading!.floor <= 9
-          ? v.reading!.floor
-          : 9,
-      chosen: v.reading?.chosen === true,
-      reducedMotion: v.reading?.reducedMotion === true,
-    },
+    reading: normalizeReading(v.reading),
     favorites: Array.isArray(v.favorites)
       ? [...new Set(v.favorites.filter(validContent))].slice(0, 200)
       : [],
@@ -288,7 +277,7 @@ export function ArchiveProvider({ children }: { children: ReactNode }) {
       ...a,
       nickname: a.nickname || guest.nickname,
       chosenPathway: a.chosenPathway || guest.chosenPathway,
-      reading: a.reading.chosen ? a.reading : guest.reading,
+      reading: a.reading,
       favorites: [...new Set([...a.favorites, ...guest.favorites])],
       history: [
         ...a.history,

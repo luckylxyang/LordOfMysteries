@@ -178,7 +178,7 @@ function IdentityView() {
           </div>
           {snapshot && (
             <>
-              <h2>{pathwayLabel(p, language, archive.reading.floor)}</h2>
+              <h2>{pathwayLabel(p, language)}</h2>
               <p>{commentary}</p>
               <div className="affinity-bars">
                 {snapshot.scores.slice(0, 3).map((score, i) => {
@@ -191,12 +191,7 @@ function IdentityView() {
                             {i === 0
                               ? text(language, "主要倾向", "Primary")
                               : text(language, "次要倾向", "Secondary")}{" "}
-                            ·{" "}
-                            {pathwayLabel(
-                              path,
-                              language,
-                              archive.reading.floor,
-                            )}
+                            · {pathwayLabel(path, language)}
                           </span>
                           <span>{score.score}/100</span>
                         </div>

@@ -14,14 +14,7 @@ export default function Profile() {
   const savedChapters = chapterIndex.filter((c) =>
     archive.favorites.includes(`ch:${c.number}`),
   );
-  const chapterLabel = (c: (typeof chapterIndex)[number]) =>
-    c.number <= archive.reading.chapter
-      ? c.title[language]
-      : text(
-          language,
-          "超出阅读进度 · 灰雾封存",
-          "Beyond reading progress · Veiled",
-        );
+  const chapterLabel = (c: (typeof chapterIndex)[number]) => c.title[language];
   function exportBackup() {
     const url = URL.createObjectURL(
       new Blob([JSON.stringify(archive, null, 2)], {
@@ -73,7 +66,7 @@ export default function Profile() {
           </h2>
           <p>
             {chosen
-              ? pathwayLabel(chosen, language, archive.reading.floor)
+              ? pathwayLabel(chosen, language)
               : text(
                   language,
                   "你的途径，由你选择",
@@ -127,7 +120,7 @@ export default function Profile() {
               </option>
               {pathways.map((p) => (
                 <option key={p.id} value={p.id}>
-                  {pathwayLabel(p, language, archive.reading.floor)}
+                  {pathwayLabel(p, language)}
                 </option>
               ))}
             </select>
@@ -237,7 +230,7 @@ export default function Profile() {
                 >
                   <Glyph id={p.id} size={40} />
                   <span>
-                    {pathwayLabel(p, language, archive.reading.floor)}
+                    {pathwayLabel(p, language)}
                     <small>
                       {new Date(s.createdAt).toLocaleString(
                         language === "zh" ? "zh-CN" : "en-US",
@@ -270,7 +263,7 @@ export default function Profile() {
             const c = chapterIndex.find((c) => `ch:${c.number}` === r.id);
             return p ? (
               <Link key={r.id} to={`/pathways/${p.id}`}>
-                {pathwayLabel(p, language, archive.reading.floor)} ↗
+                {pathwayLabel(p, language)} ↗
               </Link>
             ) : c ? (
               <Link key={r.id} to={`/plot-search?q=${c.number}`}>

@@ -2,17 +2,18 @@ import { pathways, type CanonPathway } from "../data/canon";
 
 export type Language = "zh" | "en";
 export type Reading = {
-  chapter: number;
-  floor: number;
-  chosen: boolean;
   reducedMotion: boolean;
 };
-export const initialReading: Reading = {
-  chapter: 1,
-  floor: 9,
-  chosen: false,
-  reducedMotion: false,
-};
+export const initialReading: Reading = { reducedMotion: false };
+// Ignore retired visibility settings while retaining the user's motion preference.
+export function normalizeReading(value: unknown): Reading {
+  return {
+    reducedMotion:
+      !!value &&
+      typeof value === "object" &&
+      (value as { reducedMotion?: unknown }).reducedMotion === true,
+  };
+}
 export const legacyIds: Record<string, string | null> = {
   seer: "fool",
   thief: "error",
@@ -40,15 +41,8 @@ export const legacyIds: Record<string, string | null> = {
 export function resolvePathway(id = "") {
   return pathways.find((p) => p.id === (legacyIds[id] ?? id));
 }
-export function pathwayLabel(
-  p: CanonPathway,
-  language: Language,
-  floor: number,
-) {
-  return (floor === 0 ? p.name : p.entry)[language];
-}
-export function canRead(level: number, reading: Reading) {
-  return level >= reading.floor;
+export function pathwayLabel(p: CanonPathway, language: Language) {
+  return p.name[language];
 }
 export function stage(level: number, language: Language) {
   const labels =

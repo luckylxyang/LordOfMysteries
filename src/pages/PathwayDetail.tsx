@@ -4,7 +4,6 @@ import { pathways, actingMethod } from "../data/canon";
 import { useLanguage } from "../i18n/LanguageContext";
 import { useArchive } from "../state/archive";
 import {
-  canRead,
   pathwayLabel,
   resolvePathway,
   stage,
@@ -12,10 +11,8 @@ import {
 } from "../domain/exploration";
 import {
   Glyph,
-  Reveal,
   SourceLinks,
   GroupName,
-  useRevealScope,
   FieldSource,
 } from "../components/Mystic";
 import { track } from "../utils/telemetry";
@@ -26,15 +23,12 @@ export default function PathwayDetail() {
   const { archive, favorite, visit } = useArchive();
   const p = resolvePathway(id);
   const [level, setLevel] = useState(9);
-  const scope = useRevealScope();
-  const [revealedScope, setRevealedScope] = useState<string | null>(null);
   useEffect(() => {
     if (p) {
       visit(p.id);
       track("pathway_view", p.id);
     }
     setLevel(9);
-    setRevealedScope(null);
   }, [p?.id, visit]);
   if (!p)
     return (
@@ -59,8 +53,6 @@ export default function PathwayDetail() {
       </div>
     );
   const s = p.sequences.find((s) => s.level === level)!;
-  const allowed =
-    canRead(level, archive.reading) || revealedScope === `${scope}:${level}`;
   return (
     <div
       className="detail-page"
@@ -79,12 +71,8 @@ export default function PathwayDetail() {
           <span className="eyebrow">
             PATHWAY / {String(pathways.indexOf(p) + 1).padStart(2, "0")}
           </span>
-          <h1>{pathwayLabel(p, language, archive.reading.floor)}</h1>
-          <p>
-            {archive.reading.floor === 0
-              ? p.summary[language]
-              : p.sequences.find((s) => s.level === 9)?.ability[language]}
-          </p>
+          <h1>{pathwayLabel(p, language)}</h1>
+          <p>{p.summary[language]}</p>
         </div>
         <button
           className="button ghost small"
@@ -115,7 +103,6 @@ export default function PathwayDetail() {
                 key={seq.level}
                 onClick={() => {
                   setLevel(seq.level);
-                  setRevealedScope(null);
                 }}
                 className={seq.level === level ? "active" : ""}
                 aria-pressed={seq.level === level}
@@ -125,11 +112,7 @@ export default function PathwayDetail() {
                 </span>
                 <span>
                   <small>{stage(seq.level, language)}</small>
-                  <strong>
-                    {canRead(seq.level, archive.reading)
-                      ? seq.name[language]
-                      : text(language, "灰雾封存", "Veiled by the fog")}
-                  </strong>
+                  <strong>{seq.name[language]}</strong>
                 </span>
                 <span className="ladder-diamond">◇</span>
               </button>
@@ -147,89 +130,58 @@ export default function PathwayDetail() {
               {String(level).padStart(2, "0")}
             </span>
           </div>
-          <div className="sequence-content" key={`${p.id}-${level}-${allowed}`}>
+          <div className="sequence-content" key={`${p.id}-${level}`}>
             <span className="eyebrow">
               SEQUENCE {String(level).padStart(2, "0")} /{" "}
               {stage(level, language)}
             </span>
-            {allowed ? (
-              <>
-                <h2>{s.name[language]}</h2>
+            <>
+              <h2>{s.name[language]}</h2>
+              <FieldSource
+                evidence={s.evidence.name}
+                label={text(language, "名称出处", "Name source")}
+              />
+              <div className="detail-section">
+                <h3>{text(language, "能力与权柄", "Abilities & authority")}</h3>
+                <p>{s.ability[language]}</p>
                 <FieldSource
-                  evidence={s.evidence.name}
-                  label={text(language, "名称出处", "Name source")}
+                  evidence={s.evidence.ability}
+                  label={text(language, "能力出处", "Ability source")}
                 />
-                <div className="detail-section">
-                  <h3>
-                    {text(language, "能力与权柄", "Abilities & authority")}
-                  </h3>
-                  <p>{s.ability[language]}</p>
-                  <FieldSource
-                    evidence={s.evidence.ability}
-                    label={text(language, "能力出处", "Ability source")}
-                  />
-                </div>
-                <div className="detail-section">
-                  <h3>{text(language, "升格条件", "Advancement")}</h3>
-                  <p>{s.advancement[language]}</p>
-                  <small>
-                    {text(
-                      language,
-                      "资料阅读不代表角色已晋升；此处展示原著序列结构。",
-                      "Reading this entry does not advance your identity. This is a reference to the novel’s structure.",
-                    )}
-                  </small>
-                  <FieldSource
-                    evidence={s.evidence.advancement}
-                    label={text(language, "晋升出处", "Advancement source")}
-                  />
-                </div>
-                <div className="detail-section">
-                  <h3>{text(language, "扮演方式", "Acting principles")}</h3>
-                  <p>{s.acting[language]}</p>
-                  <FieldSource
-                    evidence={s.evidence.acting}
-                    label={text(language, "扮演出处", "Acting source")}
-                  />
-                </div>
-                {s.evidence.ability.status === "pending" && (
-                  <p className="muted small-copy">
-                    {text(
-                      language,
-                      "该条目仍有待核对字段，详见来源说明。",
-                      "Some details await verification; see the source notes.",
-                    )}
-                  </p>
-                )}
-              </>
-            ) : (
-              <div className="sealed">
-                <h2>
+              </div>
+              <div className="detail-section">
+                <h3>{text(language, "升格条件", "Advancement")}</h3>
+                <p>{s.advancement[language]}</p>
+                <small>
                   {text(
                     language,
-                    "秘密仍在灰雾之后",
-                    "A secret behind the fog",
+                    "资料阅读不代表角色已晋升；此处展示原著序列结构。",
+                    "Reading this entry does not advance your identity. This is a reference to the novel’s structure.",
                   )}
-                </h2>
-                <p>
+                </small>
+                <FieldSource
+                  evidence={s.evidence.advancement}
+                  label={text(language, "晋升出处", "Advancement source")}
+                />
+              </div>
+              <div className="detail-section">
+                <h3>{text(language, "扮演方式", "Acting principles")}</h3>
+                <p>{s.acting[language]}</p>
+                <FieldSource
+                  evidence={s.evidence.acting}
+                  label={text(language, "扮演出处", "Acting source")}
+                />
+              </div>
+              {s.evidence.ability.status === "pending" && (
+                <p className="muted small-copy">
                   {text(
                     language,
-                    "这个序列超出你设置的可见范围。",
-                    "This Sequence is beyond your chosen reading depth.",
+                    "该条目仍有待核对字段，详见来源说明。",
+                    "Some details await verification; see the source notes.",
                   )}
                 </p>
-                <button
-                  className="button ghost"
-                  onClick={() => setRevealedScope(`${scope}:${level}`)}
-                >
-                  {text(
-                    language,
-                    "知晓剧透，临时展开",
-                    "Reveal this spoiler for now",
-                  )}
-                </button>
-              </div>
-            )}
+              )}
+            </>
           </div>
           <div className="ascent-controls">
             <button
@@ -237,7 +189,6 @@ export default function PathwayDetail() {
               disabled={level === 9}
               onClick={() => {
                 setLevel((x) => x + 1);
-                setRevealedScope(null);
               }}
             >
               ← {text(language, "上一阶", "Previous")}
@@ -247,7 +198,6 @@ export default function PathwayDetail() {
               disabled={level === 0}
               onClick={() => {
                 setLevel((x) => x - 1);
-                setRevealedScope(null);
               }}
             >
               {text(language, "向上探索", "Ascend")} ↑
@@ -258,23 +208,8 @@ export default function PathwayDetail() {
       <section className="acting-context">
         <span className="eyebrow">ACTING / DIGESTION</span>
         <h2>{text(language, "成长，也是一场扮演", "Growth through acting")}</h2>
-        {archive.reading.chapter >= 21 ? (
-          <>
-            <p>{actingMethod.content[language]}</p>
-            <SourceLinks ids={actingMethod.sourceIds} />
-          </>
-        ) : (
-          <Reveal
-            label={text(
-              language,
-              "涉及第 21 章的魔药知识",
-              "Potion knowledge introduced in chapter 21",
-            )}
-          >
-            <p>{actingMethod.content[language]}</p>
-            <SourceLinks ids={actingMethod.sourceIds} />
-          </Reveal>
-        )}
+        <p>{actingMethod.content[language]}</p>
+        <SourceLinks ids={actingMethod.sourceIds} />
       </section>
       <section className="related-section">
         <div className="section-row">
@@ -285,13 +220,7 @@ export default function PathwayDetail() {
             {text(language, "在星图中查看", "View in the atlas")} ↗
           </Link>
         </div>
-        {archive.reading.floor === 0 ? (
-          <Relations id={p.id} />
-        ) : (
-          <Reveal>
-            <Relations id={p.id} />
-          </Reveal>
-        )}
+        <Relations id={p.id} />
       </section>
       <div className="detail-next">
         <p>

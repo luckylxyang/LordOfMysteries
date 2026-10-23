@@ -1,12 +1,10 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { pathways } from "../data/canon";
-import { useArchive } from "../state/archive";
 import { useLanguage } from "../i18n/LanguageContext";
 import { pathwayLabel, text, stage } from "../domain/exploration";
 import { Glyph, SourceLinks, FieldSource } from "../components/Mystic";
 export default function Compare() {
   const [params] = useSearchParams();
-  const { archive } = useArchive();
   const { language } = useLanguage();
   const selected = [...new Set((params.get("ids") || "").split(","))]
     .map((id) => pathways.find((p) => p.id === id))
@@ -60,7 +58,7 @@ export default function Compare() {
           style={
             {
               "--columns": selected.length,
-              "--compare-rows": archive.reading.floor === 0 ? 13 : 12,
+              "--compare-rows": 13,
             } as React.CSSProperties
           }
         >
@@ -72,17 +70,15 @@ export default function Compare() {
             >
               <div className="comparison-head">
                 <Glyph id={p.id} />
-                <h2>{pathwayLabel(p, language, archive.reading.floor)}</h2>
+                <h2>{pathwayLabel(p, language)}</h2>
                 <Link to={`/pathways/${p.id}`}>
                   {text(language, "查看详情", "Open pathway")} ↗
                 </Link>
               </div>
-              {archive.reading.floor === 0 && (
-                <section>
-                  <h3>{text(language, "权柄主题", "Authority")}</h3>
-                  <p>{p.domain[language]}</p>
-                </section>
-              )}
+              <section>
+                <h3>{text(language, "权柄主题", "Authority")}</h3>
+                <p>{p.domain[language]}</p>
+              </section>
               {p.sequences
                 .slice()
                 .sort((a, b) => b.level - a.level)
@@ -91,37 +87,25 @@ export default function Compare() {
                     <span className="eyebrow">
                       {stage(s.level, language)} / {s.level}
                     </span>
-                    <h3>
-                      {s.level >= archive.reading.floor
-                        ? s.name[language]
-                        : text(language, "灰雾封存", "Veiled")}
-                    </h3>
-                    {s.level >= archive.reading.floor && (
-                      <>
-                        <p>{s.ability[language]}</p>
-                        <FieldSource
-                          evidence={s.evidence.ability}
-                          label={text(language, "能力出处", "Ability source")}
-                        />
-                        <small>{s.advancement[language]}</small>
-                        <FieldSource
-                          evidence={s.evidence.advancement}
-                          label={text(
-                            language,
-                            "晋升出处",
-                            "Advancement source",
-                          )}
-                        />
-                        <h4>
-                          {text(language, "扮演方式", "Acting principles")}
-                        </h4>
-                        <small>{s.acting[language]}</small>
-                        <FieldSource
-                          evidence={s.evidence.acting}
-                          label={text(language, "扮演出处", "Acting source")}
-                        />
-                      </>
-                    )}
+                    <h3>{s.name[language]}</h3>
+                    <>
+                      <p>{s.ability[language]}</p>
+                      <FieldSource
+                        evidence={s.evidence.ability}
+                        label={text(language, "能力出处", "Ability source")}
+                      />
+                      <small>{s.advancement[language]}</small>
+                      <FieldSource
+                        evidence={s.evidence.advancement}
+                        label={text(language, "晋升出处", "Advancement source")}
+                      />
+                      <h4>{text(language, "扮演方式", "Acting principles")}</h4>
+                      <small>{s.acting[language]}</small>
+                      <FieldSource
+                        evidence={s.evidence.acting}
+                        label={text(language, "扮演出处", "Acting source")}
+                      />
+                    </>
                   </section>
                 ))}
               <SourceLinks ids={p.sourceIds} />

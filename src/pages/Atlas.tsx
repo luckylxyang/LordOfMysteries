@@ -2,27 +2,16 @@ import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { pathways, groups } from "../data/canon";
 import { useLanguage } from "../i18n/LanguageContext";
-import { useArchive } from "../state/archive";
 import { pathwayLabel, text } from "../domain/exploration";
-import {
-  Glyph,
-  StarMap,
-  PathwayCard,
-  Reveal,
-  SourceLinks,
-} from "../components/Mystic";
+import { Glyph, StarMap, PathwayCard, SourceLinks } from "../components/Mystic";
 
 export default function Atlas() {
   const { language } = useLanguage();
-  const { archive, session } = useArchive();
   const [params, setParams] = useSearchParams();
   const selected = params.get("path") || "fool";
   const [filter, setFilter] = useState("");
   const [query, setQuery] = useState("");
   const [compared, setCompared] = useState<string[]>([]);
-  const scope = `${session?.user.id || "guest"}:${archive.reading.floor}:${archive.reading.chapter}`;
-  const [relationScope, setRelationScope] = useState<string | null>(null);
-  const relations = archive.reading.floor === 0 || relationScope === scope;
   const p = pathways.find((p) => p.id === selected) || pathways[0];
   const group = groups.find((g) => g.id === p.group);
   const select = (id: string) => {
@@ -55,67 +44,52 @@ export default function Atlas() {
         <span className="folio">XXII / 22</span>
       </div>
       <section className="atlas-observatory">
-        <StarMap selected={p.id} onSelect={select} relations={relations} />
+        <StarMap selected={p.id} onSelect={select} relations />
         <aside
           className="atlas-inspector"
           style={{ "--path-color": p.color } as React.CSSProperties}
         >
           <div className="eyebrow">SELECTED PATHWAY</div>
           <Glyph id={p.id} size={76} />
-          <h2>{pathwayLabel(p, language, archive.reading.floor)}</h2>
-          <p>
-            {archive.reading.floor === 0
-              ? p.summary[language]
-              : p.sequences.find((s) => s.level === 9)?.ability[language]}
-          </p>
+          <h2>{pathwayLabel(p, language)}</h2>
+          <p>{p.summary[language]}</p>
           <Link className="button primary" to={`/pathways/${p.id}`}>
             {text(language, "追溯升格之路", "Trace the ascent")} ↗
           </Link>
           <div className="inspector-relations">
-            {relations ? (
-              <>
-                <span className="eyebrow">
-                  {text(language, "相邻途径 · 关联组", "NEIGHBORING PATHWAYS")}
-                </span>
-                <h3>{group?.name[language]}</h3>
-                <p>{group?.theme[language]}</p>
-                <div className="chips">
-                  {pathways
-                    .filter((x) => x.group === p.group && x.id !== p.id)
-                    .map((x) => (
-                      <button key={x.id} onClick={() => select(x.id)}>
-                        {pathwayLabel(x, language, archive.reading.floor)}
-                      </button>
-                    ))}
-                  {pathways.filter((x) => x.group === p.group).length === 1 && (
-                    <small>
-                      {text(
-                        language,
-                        "在这 22 条途径中，没有同组的其他途径。",
-                        "No other path in this set belongs to this group.",
-                      )}
-                    </small>
-                  )}
-                </div>
-                <small>
-                  {text(
-                    language,
-                    "关联不等于任意转换；转换条件需按原著另行核对。",
-                    "A connection does not imply unrestricted switching.",
-                  )}
-                </small>
-                <SourceLinks ids={p.sourceIds} />
-              </>
-            ) : (
-              <Reveal>
-                <button
-                  className="button ghost"
-                  onClick={() => setRelationScope(scope)}
-                >
-                  {text(language, "点亮途径关联", "Illuminate the connections")}
-                </button>
-              </Reveal>
-            )}
+            <>
+              <span className="eyebrow">
+                {text(language, "相邻途径 · 关联组", "NEIGHBORING PATHWAYS")}
+              </span>
+              <h3>{group?.name[language]}</h3>
+              <p>{group?.theme[language]}</p>
+              <div className="chips">
+                {pathways
+                  .filter((x) => x.group === p.group && x.id !== p.id)
+                  .map((x) => (
+                    <button key={x.id} onClick={() => select(x.id)}>
+                      {pathwayLabel(x, language)}
+                    </button>
+                  ))}
+                {pathways.filter((x) => x.group === p.group).length === 1 && (
+                  <small>
+                    {text(
+                      language,
+                      "在这 22 条途径中，没有同组的其他途径。",
+                      "No other path in this set belongs to this group.",
+                    )}
+                  </small>
+                )}
+              </div>
+              <small>
+                {text(
+                  language,
+                  "关联不等于任意转换；转换条件需按原著另行核对。",
+                  "A connection does not imply unrestricted switching.",
+                )}
+              </small>
+              <SourceLinks ids={p.sourceIds} />
+            </>
           </div>
         </aside>
       </section>
@@ -132,28 +106,26 @@ export default function Atlas() {
             />
           </label>
         </div>
-        {relations && (
-          <div className="filter-chips">
-            <button aria-pressed={!filter} onClick={() => setFilter("")}>
-              {text(language, "全部", "All")}
+        <div className="filter-chips">
+          <button aria-pressed={!filter} onClick={() => setFilter("")}>
+            {text(language, "全部", "All")}
+          </button>
+          {groups.map((g) => (
+            <button
+              key={g.id}
+              aria-pressed={filter === g.id}
+              onClick={() => setFilter(g.id)}
+            >
+              {g.name[language]}
             </button>
-            {groups.map((g) => (
-              <button
-                key={g.id}
-                aria-pressed={filter === g.id}
-                onClick={() => setFilter(g.id)}
-              >
-                {g.name[language]}
-              </button>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
         <div className="path-grid">
           {pathways
             .filter(
               (x) =>
-                (!relations || !filter || x.group === filter) &&
-                pathwayLabel(x, language, archive.reading.floor)
+                (!filter || x.group === filter) &&
+                pathwayLabel(x, language)
                   .toLowerCase()
                   .includes(query.toLowerCase()),
             )

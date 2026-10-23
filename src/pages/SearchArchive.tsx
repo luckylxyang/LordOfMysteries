@@ -8,7 +8,6 @@ import {
   reviewedChapterNumbers,
   searchChapters,
 } from "../data/chapterIndex";
-import { Reveal } from "../components/Mystic";
 import { track } from "../utils/telemetry";
 export default function SearchArchive() {
   const { language } = useLanguage();
@@ -91,20 +90,7 @@ export default function SearchArchive() {
             <span className="eyebrow">
               CHAPTER {String(c.number).padStart(3, "0")}
             </span>
-            {c.number > archive.reading.chapter ? (
-              <Reveal
-                key={`${c.number}-${archive.reading.chapter}`}
-                label={text(
-                  language,
-                  `第 ${c.number} 章超出当前阅读进度`,
-                  `Chapter ${c.number} is beyond your reading progress`,
-                )}
-              >
-                <Chapter chapter={c} matches={matches} />
-              </Reveal>
-            ) : (
-              <Chapter chapter={c} matches={matches} />
-            )}
+            <Chapter chapter={c} matches={matches} />
           </article>
         ))}
       </div>
@@ -158,8 +144,8 @@ export default function SearchArchive() {
           <a href={c.url} target="_blank" rel="noreferrer">
             {text(
               language,
-              "Webnovel 官方英文版 · 查看原章（可能含剧透）",
-              "Webnovel official edition · Read chapter (spoilers)",
+              "Webnovel 官方英文版 · 查看原章",
+              "Webnovel official edition · Read chapter",
             )}{" "}
             ↗
           </a>

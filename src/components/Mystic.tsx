@@ -71,8 +71,6 @@ export function SourceLinks({
   locator?: string;
 }) {
   const { language } = useLanguage();
-  const { archive } = useArchive();
-  const showTitles = archive.reading.floor === 0;
   const references = sources.filter((s) => ids.includes(s.id));
   if (!references.length)
     return (
@@ -94,8 +92,8 @@ export function SourceLinks({
       <p className="small-copy muted">
         {text(
           language,
-          "来源只支持所注明的具体范围，尚未完成全书逐章核验。外部页面不受本站剧透设置控制，可能含续作内容。",
-          "Sources support only their stated scope, not a complete chapter audit. External pages may contain spoilers and sequel material.",
+          "来源只支持所注明的具体范围，尚未完成全书逐章核验。外部页面可能包含续作设定。",
+          "Sources support only their stated scope, not a complete chapter audit. External pages may include sequel material.",
         )}
       </p>
       {locator && (
@@ -105,37 +103,11 @@ export function SourceLinks({
         </p>
       )}
       {references.map((s) => {
-        const label =
-          s.chapter !== undefined
-            ? text(
-                language,
-                `原著 · 官方英文版第 ${s.chapter} 章`,
-                `Original novel · official English edition, chapter ${s.chapter}`,
-              )
-            : s.id === "qidian-settings"
-              ? text(language, "官方设定参考", "Official setting reference")
-              : s.id.startsWith("abilities-")
-                ? text(
-                    language,
-                    "能力资料索引 · 二手参考",
-                    "Ability index · secondary source",
-                  )
-                : s.id.startsWith("advancement-")
-                  ? text(
-                      language,
-                      "晋升资料 · 待进一步核验",
-                      "Advancement reference · further checks pending",
-                    )
-                  : text(
-                      language,
-                      "途径与名称索引 · 二手参考",
-                      "Pathway and name index · secondary source",
-                    );
         return (
           <div className="source-entry" key={s.id}>
             <div className="source-links">
               <a href={s.url} target="_blank" rel="noreferrer">
-                {showTitles ? s.title : label} ↗
+                {s.title} ↗
               </a>
             </div>
             {s.edition && (
@@ -197,61 +169,10 @@ export function FieldSource({
   );
 }
 
-/** Temporary reveals belong to a reader, a route and the current spoiler policy. */
-export function useRevealScope() {
-  const { archive, session } = useArchive();
-  const location = useLocation();
-  return `${session?.user.id || "guest"}:${archive.reading.floor}:${archive.reading.chapter}:${location.pathname}:${location.search}`;
-}
-
-export function Reveal({
-  children,
-  label,
-}: {
-  children: ReactNode;
-  label?: string;
-}) {
-  const scope = useRevealScope();
-  const [revealedScope, setRevealedScope] = useState<string | null>(null);
-  const { language } = useLanguage();
-  const open = revealedScope === scope;
-  return open ? (
-    <div className="temporary-reveal">
-      {children}
-      <button
-        type="button"
-        className="text-button"
-        onClick={() => setRevealedScope(null)}
-      >
-        {text(language, "重新封存", "Veil again")}
-      </button>
-    </div>
-  ) : (
-    <div className="sealed">
-      <span className="seal-mark">◇</span>
-      <p>
-        {label ||
-          text(
-            language,
-            "此处涉及高序列与世界观关联",
-            "This section reveals higher Sequences and cosmology",
-          )}
-      </p>
-      <button
-        type="button"
-        className="button ghost small"
-        onClick={() => setRevealedScope(scope)}
-      >
-        {text(language, "我已知晓，临时展开", "Reveal for this visit")}
-      </button>
-    </div>
-  );
-}
-
 export function StarMap({
   selected,
   onSelect,
-  relations = false,
+  relations = true,
   compact = false,
 }: {
   selected: string;
@@ -260,7 +181,6 @@ export function StarMap({
   compact?: boolean;
 }) {
   const { language } = useLanguage();
-  const { archive } = useArchive();
   const active = pathways.find((p) => p.id === selected) || pathways[0];
   const gradient = useId().replace(/:/g, "");
   const buttons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -325,7 +245,7 @@ export function StarMap({
       <div className="map-center" key={active.id} aria-live="polite">
         <Glyph id={active.id} size={compact ? 72 : 88} />
         <span>{text(language, "命运的回响", "AN ECHO OF FATE")}</span>
-        <strong>{pathwayLabel(active, language, archive.reading.floor)}</strong>
+        <strong>{pathwayLabel(active, language)}</strong>
       </div>
       {nodes.map(({ p, x, y }, i) => (
         <button
@@ -363,13 +283,11 @@ export function StarMap({
             onSelect(nodes[next].p.id);
             buttons.current[next]?.focus();
           }}
-          aria-label={pathwayLabel(p, language, archive.reading.floor)}
+          aria-label={pathwayLabel(p, language)}
           aria-pressed={p.id === active.id}
         >
           <span className="node-dot" />
-          <span className="node-name">
-            {pathwayLabel(p, language, archive.reading.floor)}
-          </span>
+          <span className="node-name">{pathwayLabel(p, language)}</span>
         </button>
       ))}
       <div className="map-caption">
@@ -400,7 +318,7 @@ export function PathwayCard({
         <button
           type="button"
           className="icon-button"
-          aria-label={`${text(language, saved ? "取消收藏" : "收藏途径", saved ? "Remove favorite" : "Favorite pathway")} · ${pathwayLabel(p, language, archive.reading.floor)}`}
+          aria-label={`${text(language, saved ? "取消收藏" : "收藏途径", saved ? "Remove favorite" : "Favorite pathway")} · ${pathwayLabel(p, language)}`}
           aria-pressed={saved}
           onClick={() => favorite(p.id)}
         >
@@ -408,20 +326,12 @@ export function PathwayCard({
         </button>
       </div>
       <span className="eyebrow">
-        {archive.reading.floor === 0
-          ? text(language, "途径概览", "PATHWAY OVERVIEW")
-          : "SEQUENCE 09"}
+        {text(language, "途径概览", "PATHWAY OVERVIEW")}
       </span>
       <h3>
-        <Link to={`/pathways/${p.id}`}>
-          {pathwayLabel(p, language, archive.reading.floor)}
-        </Link>
+        <Link to={`/pathways/${p.id}`}>{pathwayLabel(p, language)}</Link>
       </h3>
-      <p>
-        {archive.reading.floor === 0
-          ? p.summary[language]
-          : p.sequences.find((s) => s.level === 9)?.ability[language]}
-      </p>
+      <p>{p.summary[language]}</p>
       <div className="path-card-bottom">
         <Link className="text-link" to={`/pathways/${p.id}`}>
           {text(language, "沿此途径探索", "Explore this pathway")} ↗
@@ -432,11 +342,9 @@ export function PathwayCard({
   );
 }
 
-export function ReadingSettings({ onClose }: { onClose: () => void }) {
+export function MotionSettings({ onClose }: { onClose: () => void }) {
   const { language } = useLanguage();
   const { archive, update } = useArchive();
-  const [chapter, setChapter] = useState(archive.reading.chapter);
-  const [floor, setFloor] = useState(archive.reading.floor);
   const [motion, setMotion] = useState(archive.reading.reducedMotion);
   const dialog = useRef<HTMLDialogElement>(null);
   const heading = useId();
@@ -450,91 +358,28 @@ export function ReadingSettings({ onClose }: { onClose: () => void }) {
     };
   }, []);
   const save = () => {
-    update((a) => ({
-      ...a,
-      reading: {
-        chapter: Math.max(1, Math.min(1432, Math.floor(chapter || 1))),
-        floor,
-        chosen: true,
-        reducedMotion: motion,
-      },
-    }));
+    update((a) => ({ ...a, reading: { reducedMotion: motion } }));
     onClose();
   };
   return (
     <dialog
       ref={dialog}
-      className="reading-dialog"
+      className="motion-dialog"
       aria-labelledby={heading}
       onCancel={(e) => {
         e.preventDefault();
         onClose();
-        if (!archive.reading.chosen)
-          update((a) => ({ ...a, reading: { ...a.reading, chosen: true } }));
       }}
     >
-      <div className="eyebrow">BEFORE YOU CROSS THE FOG</div>
-      <h2 id={heading}>
-        {text(language, "你已探索到哪里？", "How far have you wandered?")}
-      </h2>
+      <div className="eyebrow">MOTION PREFERENCES</div>
+      <h2 id={heading}>{text(language, "动画设置", "Motion settings")}</h2>
       <p>
         {text(
           language,
-          "章节进度控制搜索结果；序列范围控制途径资料。灰雾会遮住你尚未准备好知晓的秘密。",
-          "Chapter progress controls search results; Sequence depth controls pathway entries. The fog conceals what you are not ready to know.",
+          "按你的习惯调整灰雾、星图与升格的动态效果。",
+          "Adjust the motion of the fog, atlas and ascent to suit you.",
         )}
       </p>
-      <label>
-        {text(
-          language,
-          "阅读进度 · 英文版全书章号",
-          "Reading progress · English edition chapter number",
-        )}
-        <input
-          type="number"
-          min="1"
-          max="1432"
-          step="1"
-          value={chapter}
-          onChange={(e) => setChapter(Number(e.target.value))}
-        />
-      </label>
-      <label>
-        {text(
-          language,
-          "允许展示到哪个序列？",
-          "Lowest Sequence number to reveal",
-        )}
-        <select
-          value={floor}
-          onChange={(e) => setFloor(Number(e.target.value))}
-        >
-          <option value={9}>
-            {text(language, "序列 9 · 初次踏入", "Sequence 9 · New reader")}
-          </option>
-          <option value={7}>
-            {text(
-              language,
-              "序列 7 · 初步探索",
-              "Sequence 7 · Early exploration",
-            )}
-          </option>
-          <option value={4}>
-            {text(
-              language,
-              "序列 4 · 半神门槛",
-              "Sequence 4 · Demigod threshold",
-            )}
-          </option>
-          <option value={0}>
-            {text(
-              language,
-              "序列 0 · 全部设定与关联",
-              "Sequence 0 · All names and connections",
-            )}
-          </option>
-        </select>
-      </label>
       <label className="check-line">
         <input
           type="checkbox"
@@ -548,7 +393,7 @@ export function ReadingSettings({ onClose }: { onClose: () => void }) {
         )}
       </label>
       <button type="button" className="button primary" onClick={save}>
-        {text(language, "保存并进入灰雾", "Enter the gray fog")}
+        {text(language, "保存设置", "Save settings")}
       </button>
     </dialog>
   );
@@ -556,7 +401,7 @@ export function ReadingSettings({ onClose }: { onClose: () => void }) {
 
 export function Shell({ children }: { children: ReactNode }) {
   const { language, setLanguage } = useLanguage();
-  const { archive, session } = useArchive();
+  const { session } = useArchive();
   const [settings, setSettings] = useState(false);
   const location = useLocation();
   const owner = session?.user.id || "guest";
@@ -626,16 +471,8 @@ export function Shell({ children }: { children: ReactNode }) {
             type="button"
             className="icon-button"
             onClick={() => setSettings(true)}
-            title={text(
-              language,
-              "阅读与动画设置",
-              "Reading and motion settings",
-            )}
-            aria-label={text(
-              language,
-              "阅读与动画设置",
-              "Reading and motion settings",
-            )}
+            title={text(language, "动画设置", "Motion settings")}
+            aria-label={text(language, "动画设置", "Motion settings")}
           >
             ◐
           </button>
@@ -666,8 +503,8 @@ export function Shell({ children }: { children: ReactNode }) {
           )}
         </p>
       </footer>
-      {(settings || !archive.reading.chosen) && (
-        <ReadingSettings key={owner} onClose={() => setSettings(false)} />
+      {settings && (
+        <MotionSettings key={owner} onClose={() => setSettings(false)} />
       )}
     </>
   );

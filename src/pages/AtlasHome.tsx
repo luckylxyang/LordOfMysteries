@@ -81,7 +81,7 @@ export default function AtlasHome() {
           <StarMap selected={selected} onSelect={setSelected} compact />
           <Link to={`/pathways/${p.id}`} className="map-discovery">
             <span>{text(language, "此刻的回响", "CURRENT RESONANCE")}</span>
-            <strong>{pathwayLabel(p, language, archive.reading.floor)}</strong>
+            <strong>{pathwayLabel(p, language)}</strong>
             <span>↗</span>
           </Link>
         </div>
@@ -145,14 +145,14 @@ export default function AtlasHome() {
                 : recentChapter
                   ? text(
                       language,
-                      `继续查阅第 ${recentChapter.number} 章。资料会遵守你当前的阅读进度。`,
-                      `Return to chapter ${recentChapter.number}. Your reading settings still apply.`,
+                      `继续查阅第 ${recentChapter.number} 章，接着追溯其中的线索。`,
+                      `Return to chapter ${recentChapter.number}. Continue following its clues.`,
                     )
                   : recent
                     ? text(
                         language,
-                        `上次，你在「${pathwayLabel(recent, language, archive.reading.floor)}」驻足。灰雾仍为你留着入口。`,
-                        `Your last stop was ${pathwayLabel(recent, language, archive.reading.floor)}. Your place awaits.`,
+                        `上次，你在「${pathwayLabel(recent, language)}」驻足。灰雾仍为你留着入口。`,
+                        `Your last stop was ${pathwayLabel(recent, language)}. Your place awaits.`,
                       )
                     : text(
                         language,

@@ -1,0 +1,117 @@
+{
+  "tool": "Built-in imagegen",
+  "reference": "design/identity-preview-v2/pathway-cards.png",
+  "basePrompt": "Asset type: production background artwork for an original unofficial Lord of the Mysteries Beyonder identity card. Use the attached APPROVED THREE-CARD concept board as series art-direction reference: same exquisite Victorian engraved book illustration, copperplate hatching, layered gouache, worn ink, sophisticated narrative scene, richly meaningful illustrated border. Create ONE single complete tall portrait card, aspect ratio 3:5, full frame almost touches all four edges, no desk, no mockup, no other cards. Main narrative scene in upper 73%; lower 27% a calm BLANK material panel suitable for dynamic overlaid name/title/sequence. Border continues on both sides of lower panel but central 82% lower panel must be free of objects. Upper scene may blend gently into panel at 73%. Absolutely NO letters, NO words, NO numerals, NO text, NO labels, NO signature anywhere. Do not render any of the text visible in reference board. Bottom panel texture and color should suit pathway (aged parchment for warm schemes; black book cloth for dark schemes). Do not use generic astrology rings or a centered icon. Each pathway requires its own complete meaningful scene and border. No copied artist-specific compositions. Restrained cosmic horror, tiny human figures versus immense hidden supernatural forces. ",
+  "pathways": [
+    [
+      "fool",
+      "The Fool",
+      "Cold silver-grey fog, old bronze, near-black and tiny dark red accents. A small Victorian gentleman with top hat seen from behind on an immense ancient bronze table extending into impossible mist toward a distant high-backed empty chair. Suspended tarot cards, near-invisible marionette threads descending from enormous hands only barely hinted at in cloud. Architectural ornaments and puppet threads make the border. Match the LEFT approved card's atmosphere and composition, but no writing."
+    ],
+    [
+      "error",
+      "Error",
+      "Antique parchment, tobacco sepia, ivory, brass, black. A giant single monocle on a fine chain, a raven on its rim, a Victorian clocktower refracted and displaced inside the lens. Broken overlapping clock face fragments; a finely gloved hand steals one clock hand. Interrupted asymmetrical border with subtle translucent worm-like curves. Match the MIDDLE approved card, remove all writing."
+    ],
+    [
+      "darkness",
+      "Darkness",
+      "Ink indigo, blue black, tarnished silver, a restrained crimson moon. Small Victorian night watchman with a lantern on a path through white night flowers. Huge veils of starry night fold into a canopy; deep red moon partially veiled by black branches. Quiet and restful with unsettling concealed danger. Silver botanical tracery and night foliage border. Match the RIGHT approved card, no writing."
+    ],
+    [
+      "door",
+      "Door",
+      "Deep ultramarine and aged silver. A tiny Victorian traveler carrying a suitcase approaches several tall half-open doorways suspended at different angles in an immense starry void, every doorway reveals a different distant landscape, stairs disappear between impossible planes. One key floats prominently near foreground. Architecture and keyhole filigree form spatially broken border. Emphasize wandering, recording, space, no raven no clock no red moon."
+    ],
+    [
+      "visionary",
+      "Visionary",
+      "Pale ivory, muted rose, old dark green, subtle gold. A quiet Victorian theater with a single seated observer seen from behind, observing rows of translucent audience silhouettes. The theater's curved balconies turn into a vast ocean and a colossal sleeping dragon shape barely visible below its surface. Upper scenic curtains resemble eyelids, deliberate calm symmetric perspective subtly bent by imagined reality. Elegant masked faces and wave filigree border, no mechanical components."
+    ],
+    [
+      "sun",
+      "Sun",
+      "White and burnished honey gold, warm amber, deep brown shadows. A small robed cantor carrying a book stands in an enormous Gothic chapel, blinding circular sunlight from a high stained glass rose window burns through heavy shadows, bright embers dissolve the darkness. Strong ascending symmetrical composition and long beams. Ornate radiant rays, wheat-like flames and stone church tracery border. Sacred purity, no modern magic circles."
+    ],
+    [
+      "tyrant",
+      "Tyrant",
+      "Storm blue, wet slate black and fierce silver-white lightning. A sailing vessel dwarfed by huge breaking waves under a cathedral-like bank of thunderclouds; one small sailor silhouette on a jagged headland holds an anchor chain, violent lightning cuts diagonally through the ocean. Border made of ropes, wave crests and corroded copper sea ornaments. Visceral nautical force, not generic blue wizard."
+    ],
+    [
+      "white-tower",
+      "White Tower",
+      "Bone ivory, cold grey, ink blue and restrained gold. A tall pale tower formed of stacked vast library rooms, open books and geometric analytical diagrams become architecture, a tiny scholar at a desk uses a magnifying lens to inspect a branching map of possible futures. Light from high narrow windows. Ascending ordered composition and carved stone/book-spine border, no readable words or numerals, no astrology disk."
+    ],
+    [
+      "hanged-man",
+      "Hanged Man",
+      "Oxblood, deep violet black and sickly muted amber. An anonymous shrouded human suspended upside down by one ankle in a ruined Gothic arch, their shadow splits into several ghostly silhouettes. Veins like roots curl around dark stone and subtle flesh-like ribbons, a shepherd's crook in the foreground casts an impossible shadow. Unsettling but non-graphic sacred horror, no blood wounds. Organic sinew and inverted arch border."
+    ],
+    [
+      "death",
+      "Death",
+      "Verdigris green, bone white, misty black and antique dull gold. A small ferryman in a dark cloak leads an empty ancient wooden boat across a still spectral river beneath immense bone-like gates; faint ghost silhouettes in green fog, a single white feather drifts near foreground. Border of feathered wings, river reeds and aged bronze funerary carving. Silent threshold and dignity, no gore, not a fighting skeleton."
+    ],
+    [
+      "twilight-giant",
+      "Twilight Giant",
+      "Rusty orange twilight, weathered iron and ash gold. A solitary armored warrior with a massive upright sword guards a monumental broken doorway at sunset, a vast giant-shaped silhouette is suggested by distant mountains, long angular shadows dwarf the person. Martial defensive stillness and strength. Border of scarred iron, broken stone battlements and straight sword-like forms, no gears."
+    ],
+    [
+      "demoness",
+      "Demoness",
+      "Deep plum, obsidian, silver and subtle crimson. An anonymous elegant Victorian woman silhouette reflected inconsistently in multiple long cracked mirrors, black hair flows like fine threads through the composition, mirror fragments reveal storm clouds and distant ruined city. Foreground a delicate black rose and an assassin's concealed narrow blade. Sensuous but fully clothed, ominous curse rather than glamorous portrait. Thorn, spider-silk and broken mirror silver border."
+    ],
+    [
+      "red-priest",
+      "Red Priest",
+      "Charcoal, iron, burnt vermilion and smoke gold. A small cloaked hunter with a spear advances across an ancient battlefield; burnt banners and tactical paths converge into a towering plume of fire shaped like a war standard, ruined city wall in distance. Dynamic diagonal war composition, no gore. Border made of forged spearheads, scorched standards and laurel consumed by flame."
+    ],
+    [
+      "hermit",
+      "Hermit",
+      "Deep amethyst, midnight ink and aged gold. A solitary hooded scholar opens a book in a dark observatory filled with floating sheets; book pages spill into countless tiny stars and hidden watching eyes among the night. Strange knowledge appearing within shadows, tiny person under vast scroll-like cosmos. Border formed from parchment scroll curls, constellation branches and subtle eye motifs, no readable text or magic-circle central logo."
+    ],
+    [
+      "paragon",
+      "Paragon",
+      "Oxidized teal, copper, iron charcoal and warm furnace amber. A meticulous Victorian artisan at a workbench assembling an intricate brass automaton hand; drafting instruments, a lens, alchemical glass and tiny metal components in foreground, monumental workshop chimney and mechanical bridge behind. Human craft, invention and material ingenuity. Border of precisely engraved tool silhouettes, articulated brass fittings and blueprint lines without writing. Restrained purposeful machinery, not random gears everywhere."
+    ],
+    [
+      "wheel-of-fortune",
+      "Wheel of Fortune",
+      "Muted antique gold, charcoal and worn ivory. A vast tilted old wheel towers over a tiny anonymous traveler standing at a branching cobblestone crossroads, one side of road bathed in sun and the other in rain. Dice and a spinning coin suspended in near foreground; wheel spokes become intersecting paths of fate, a snake-like ribbon loops around border, no readable numerals. Uneasy fortune and probability, distinctive circular dramatic composition."
+    ],
+    [
+      "mother",
+      "Mother",
+      "Moss green, fertile earth brown, warm cream and subdued copper. An anonymous gardener holding a sprouting seed stands before an immense ancient tree whose canopy cradles a small rural village, roots curl around medicinal plants and a quiet healing bowl in foreground. Lush life, care and quietly overwhelming growth, not a bright fairy garden. Organic root, seed pod, leaf and flower border, woodcut botanical texture."
+    ],
+    [
+      "moon",
+      "Moon",
+      "Deep burgundy, pale silver, dusty rose and black. A scarlet full moon glows through a tall greenhouse dome, a Victorian apothecary in silhouette tends alchemical vessels and rare night plants, small winged familiar perched near moonlit glass, a drop of crimson potion suspended over a silver chalice. Lunar alchemy and summoning, distinctly different from Darkness: focus on red moon, apothecary and silver glasswork, not canopy/lantern. Silver climbing vines and glass bottle ornament border."
+    ],
+    [
+      "abyss",
+      "Abyss",
+      "Burnt umber, black coal, rusty red and dull molten gold. A tiny figure at a Victorian alley's threshold casts an enormous horned demonic shadow down a deep chasm where city buildings spiral into darkness. Tempting small golden objects near the edge; cloven claw-like stone and smoke suggest malice, appetite and degeneration. Craggy horn and volcanic rock border, non-graphic horror, no flames covering entire composition."
+    ],
+    [
+      "chained",
+      "Chained",
+      "Lead grey, deep desaturated violet, pallid ivory and dull silver. An anonymous bound figure in a ruined chapel, heavy chains run through cracked stone windows, their translucent wraith-like double slips free from the body and through a mirror-like puddle; a distant twisted human silhouette resembles a restrained beast. Theme of restraint, mutation, ghost and curse, dignified non-graphic horror. Chain link, thorn and shattered iron bars border."
+    ],
+    [
+      "black-emperor",
+      "Black Emperor",
+      "Ink purple, black basalt, tarnished gold and dark wine. A tiny crowned silhouette seated on a vast black throne above a Victorian city, streets and columns bend into impossible angles, floating broken law tablets and a tilted crown suggest distortion of order. Oppressive grand central hierarchy with visually crooked space. Imperial black stone, bent laurel and fragmented architectural cornice border, no readable words."
+    ],
+    [
+      "justiciar",
+      "Justiciar",
+      "Aged ivory marble, muted gold and severe charcoal. A solitary robed arbiter before monumental perfectly symmetric courthouse columns, a giant balance scale suspended overhead, a straight sword of reflected light divides shadow from illumination, chain-like lines form a rigorously ordered grid over the cobbled floor. Order, judgment, prohibition. Border of angular law-tablet forms, scales and straight marble cornices, visually distinct from warped Black Emperor. No readable words."
+    ]
+  ]
+}

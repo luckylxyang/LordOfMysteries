@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { pathways } from "../data/canon";
 import {
   resolvePathway,
@@ -13,7 +18,9 @@ import {
 } from "../domain/exploration";
 import { useLanguage } from "../i18n/LanguageContext";
 import { useArchive } from "../state/archive";
-import { Glyph } from "../components/Mystic";
+import IdentityCard from "../components/IdentityCard";
+import { identityArt } from "../data/identityArt";
+import "./Identity.css";
 import { exportIdentityCard } from "../utils/identityCard";
 import { track } from "../utils/telemetry";
 export default function Identity() {
@@ -26,6 +33,7 @@ export default function Identity() {
   );
 }
 function IdentityView() {
+  const navigate = useNavigate();
   const { pathwayId } = useParams();
   const [params] = useSearchParams();
   const { language } = useLanguage();
@@ -41,12 +49,13 @@ function IdentityView() {
   }, [archive.nickname, shared]);
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
+  const [cardReady, setCardReady] = useState(false);
   const commentary =
     snapshot?.commentary[language] ||
     text(
       language,
-      "这是一张自选途径身份卡。每一次选择，都是探索的起点。",
-      "A chosen-pathway identity card. Every choice is a beginning.",
+      "每一次选择，都是探索的起点。",
+      "Every choice is a beginning.",
     );
   useEffect(() => {
     if (params.get("shared") === "1" && p) track("share_landing", p.id);
@@ -150,25 +159,19 @@ function IdentityView() {
         </div>
       </div>
       <div className="identity-layout">
-        <div
-          className="identity-card"
-          style={{ "--path-color": p.color } as React.CSSProperties}
-        >
-          <div className="card-corners" />
-          <span className="eyebrow">LOTM.SPACE / BEYONDER ARCHIVE</span>
-          <div className="card-emblem">
-            <div className="card-orbit" />
-            <Glyph id={p.id} size={130} />
+        <div className="identity-art-stage">
+          <div className="identity-edition" aria-hidden="true">
+            BEYONDER ARCHIVE / {p.id.toUpperCase().replace(/-/g, " ")}
           </div>
-          <span className="eyebrow">SEQUENCE 09</span>
-          <h2>{p.entry[language]}</h2>
-          <h3>{nickname || text(language, "寻途者", "Seeker")}</h3>
-          <p>{commentary}</p>
-          <div className="card-footer">
-            {snapshot ? "ASSESSMENT AFFINITY" : "CHOSEN IDENTITY"}
-            <span>◇</span>
-            {text(language, "非官方同人作品", "UNOFFICIAL FAN WORK")}
-          </div>
+          <IdentityCard
+            key={p.id}
+            path={p}
+            nickname={nickname}
+            commentary={commentary}
+            language={language}
+            assessed={!!snapshot}
+            onReady={setCardReady}
+          />
         </div>
         <div className="identity-tools">
           <div className="eyebrow">
@@ -176,9 +179,39 @@ function IdentityView() {
               ? text(language, "理解你的回响", "UNDERSTAND YOUR AFFINITY")
               : text(language, "为自己选择身份", "CHOOSE AN IDENTITY")}
           </div>
+          <div className="identity-path-summary">
+            <h2>{pathwayLabel(p, language)}</h2>
+            <p>{identityArt[p.id].motif[language]}</p>
+            <span>
+              {text(language, "序列 9", "SEQUENCE 9")} · {p.entry[language]}
+            </span>
+          </div>
+          {!snapshot && <p>{commentary}</p>}
+          <label className="identity-path-select">
+            {text(
+              language,
+              "浏览其他途径的身份卡",
+              "Explore another pathway card",
+            )}
+            <select
+              value={p.id}
+              onChange={(e) => {
+                setStatus("");
+                setCardReady(false);
+                navigate(
+                  `/result/${e.target.value}${shared ? "?shared=1" : ""}`,
+                );
+              }}
+            >
+              {pathways.map((path) => (
+                <option key={path.id} value={path.id}>
+                  {path.name[language]} · {path.entry[language]}
+                </option>
+              ))}
+            </select>
+          </label>
           {snapshot && (
             <>
-              <h2>{pathwayLabel(p, language)}</h2>
               <p>{commentary}</p>
               <div className="affinity-bars">
                 {snapshot.scores.slice(0, 3).map((score, i) => {
@@ -296,7 +329,11 @@ function IdentityView() {
               placeholder={text(language, "寻途者", "Seeker")}
             />
           </label>
-          <button className="button primary" disabled={busy} onClick={download}>
+          <button
+            className="button primary"
+            disabled={busy || !cardReady}
+            onClick={download}
+          >
             {text(
               language,
               busy ? "正在绘制…" : "下载高清身份卡",

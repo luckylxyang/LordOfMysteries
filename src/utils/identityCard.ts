@@ -1,6 +1,162 @@
 import type { CanonPathway } from "../data/canon";
 import type { Language } from "../domain/exploration";
-import { glyphFrame, pathwayGlyph } from "../data/pathwayGlyphs";
+import { identityArt, identityArtUrl } from "../data/identityArt";
+
+export const CARD_WIDTH = 1200;
+export const CARD_HEIGHT = 2000;
+const SERIF = '"Noto Serif SC", "Songti SC", SimSun, Georgia, serif';
+const imageCache = new Map<string, Promise<HTMLImageElement>>();
+
+function loadArtwork(id: string) {
+  const url = identityArtUrl(id, import.meta.env.BASE_URL);
+  const cached = imageCache.get(url);
+  if (cached) return cached;
+  const pending = new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => {
+      imageCache.delete(url);
+      reject(new Error("Identity artwork unavailable"));
+    };
+    image.src = url;
+  });
+  if (imageCache.size >= 4) imageCache.delete(imageCache.keys().next().value!);
+  imageCache.set(url, pending);
+  return pending;
+}
+
+function fittedText(
+  ctx: CanvasRenderingContext2D,
+  value: string,
+  y: number,
+  fontSize: number,
+  maxWidth = 900,
+) {
+  let size = fontSize;
+  do {
+    ctx.font = `${size}px ${SERIF}`;
+    if (ctx.measureText(value).width <= maxWidth) break;
+    size -= 1;
+  } while (size > 16);
+  ctx.fillText(value, CARD_WIDTH / 2, y, maxWidth);
+}
+
+/** Bound prose to two caption lines; the complete assessment remains on the page. */
+function captionLines(
+  ctx: CanvasRenderingContext2D,
+  value: string,
+  width: number,
+) {
+  const lines: string[] = [];
+  let line = "";
+  const tokens =
+    value.trim().match(/[\u2e80-\uffef]|[^\s\u2e80-\uffef]+\s*|\s+/gu) || [];
+  for (const token of tokens) {
+    if (ctx.measureText(line + token).width > width && line) {
+      lines.push(line.trim());
+      line = "";
+    }
+    for (const character of token) {
+      if (ctx.measureText(line + character).width > width && line) {
+        lines.push(line.trim());
+        line = "";
+      }
+      line += character;
+    }
+  }
+  if (line.trim()) lines.push(line.trim());
+  if (lines.length > 2) {
+    let last = lines[1];
+    while (ctx.measureText(last + "…").width > width) last = last.slice(0, -1);
+    return [lines[0], last.trim() + "…"];
+  }
+  return lines;
+}
+
+/** Shared compositor: preview and downloaded PNG use exactly these pixels. */
+export async function createIdentityCardCanvas(
+  path: CanonPathway,
+  nickname: string,
+  commentary: string,
+  language: Language,
+  assessed = false,
+) {
+  const [image] = await Promise.all([
+    loadArtwork(path.id),
+    document.fonts.ready,
+  ]);
+  const canvas = document.createElement("canvas");
+  canvas.width = CARD_WIDTH;
+  canvas.height = CARD_HEIGHT;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas unavailable");
+  const paper = identityArt[path.id].surface === "paper";
+  ctx.fillStyle = paper ? "#d5c29a" : "#11151b";
+  ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
+  ctx.drawImage(image, 0, 0, CARD_WIDTH, CARD_HEIGHT);
+  // Translucent wash preserves the print texture beneath the variable text.
+  const wash = ctx.createLinearGradient(0, 1530, 0, 1960);
+  wash.addColorStop(0, paper ? "#ddcba600" : "#10131800");
+  wash.addColorStop(0.2, paper ? "#ddcba670" : "#10131870");
+  wash.addColorStop(0.85, paper ? "#ddcba670" : "#10131870");
+  wash.addColorStop(1, paper ? "#ddcba600" : "#10131800");
+  ctx.fillStyle = wash;
+  ctx.fillRect(110, 1530, 980, 430);
+  ctx.textAlign = "center";
+  ctx.fillStyle = paper ? "#28241f" : "#e4dfd3";
+  fittedText(ctx, path.name[language], 1660, language === "zh" ? 86 : 68);
+  ctx.fillStyle = paper ? "#5b4e3d" : "#bdb8b1";
+  fittedText(
+    ctx,
+    language === "zh" ? path.name.en.toUpperCase() : path.name.zh,
+    1710,
+    25,
+  );
+  fittedText(
+    ctx,
+    `${language === "zh" ? "序列 9" : "SEQUENCE 9"}  ·  ${path.entry[language]}`,
+    1760,
+    32,
+  );
+  ctx.strokeStyle = paper ? "#6c583c80" : "#c3bb9c70";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(300, 1795);
+  ctx.lineTo(555, 1795);
+  ctx.moveTo(645, 1795);
+  ctx.lineTo(900, 1795);
+  ctx.moveTo(600, 1784);
+  ctx.lineTo(612, 1795);
+  ctx.lineTo(600, 1806);
+  ctx.lineTo(588, 1795);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.fillStyle = paper ? "#30271f" : "#e4dfd3";
+  const name = nickname.trim() || (language === "zh" ? "寻途者" : "Seeker");
+  fittedText(ctx, name, 1847, 40, 860);
+  ctx.fillStyle = paper ? "#5b4e3d" : "#bdb8b1";
+  ctx.font = `25px ${SERIF}`;
+  captionLines(ctx, commentary, 850).forEach((line, index) =>
+    ctx.fillText(line, CARD_WIDTH / 2, 1893 + index * 31),
+  );
+  const kind =
+    language === "zh"
+      ? assessed
+        ? "测评倾向"
+        : "自选身份"
+      : assessed
+        ? "ASSESSMENT AFFINITY"
+        : "CHOSEN IDENTITY";
+  fittedText(
+    ctx,
+    `${kind}  ·  ${language === "zh" ? "非官方同人作品" : "UNOFFICIAL FAN WORK"}  /  LOTM.SPACE`,
+    1950,
+    22,
+    900,
+  );
+  return canvas;
+}
+
 export async function exportIdentityCard(
   path: CanonPathway,
   nickname: string,
@@ -8,91 +164,12 @@ export async function exportIdentityCard(
   language: Language,
   assessed = false,
 ) {
-  await document.fonts.ready;
-  const canvas = document.createElement("canvas");
-  canvas.width = 1200;
-  canvas.height = 1600;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("Canvas unavailable");
-  ctx.fillStyle = "#101a1b";
-  ctx.fillRect(0, 0, 1200, 1600);
-  const glow = ctx.createRadialGradient(600, 530, 10, 600, 530, 520);
-  glow.addColorStop(0, `${path.color}24`);
-  glow.addColorStop(1, "#101a1b00");
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, 0, 1200, 1600);
-  ctx.strokeStyle = "#b5a178";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(40, 40, 1120, 1520);
-  ctx.strokeStyle = "#b5a17844";
-  ctx.strokeRect(56, 56, 1088, 1488);
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#c6b68b";
-  ctx.font = "22px Georgia";
-  ctx.fillText("L O T M . S P A C E", 600, 130);
-  ctx.fillText("BEYONDER IDENTITY / SEQUENCE 09", 600, 185);
-  ctx.strokeStyle = path.color;
-  [220, 235].forEach((r) => {
-    ctx.beginPath();
-    ctx.arc(600, 490, r, 0, Math.PI * 2);
-    ctx.stroke();
-  });
-  const art = pathwayGlyph(path.id);
-  ctx.save();
-  ctx.translate(600, 490);
-  ctx.scale(5.4, 5.4);
-  ctx.translate(-40, -40);
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.lineWidth = 0.7;
-  ctx.globalAlpha = 0.4;
-  for (const d of glyphFrame) ctx.stroke(new Path2D(d));
-  ctx.globalAlpha = 1;
-  ctx.lineWidth = 1.15;
-  for (const d of art.lines) ctx.stroke(new Path2D(d));
-  ctx.globalAlpha = 0.55;
-  ctx.lineWidth = 0.8;
-  for (const d of art.accents) ctx.stroke(new Path2D(d));
-  ctx.restore();
-  ctx.fillStyle = "#f0e9da";
-  ctx.font = '64px Georgia, "Microsoft YaHei", serif';
-  ctx.fillText(path.entry[language], 600, 835);
-  let size = 44;
-  const name = nickname.trim() || (language === "zh" ? "寻途者" : "Seeker");
-  do {
-    ctx.font = `${size}px Georgia, "Microsoft YaHei", serif`;
-    if (ctx.measureText(name).width <= 950) break;
-    size -= 2;
-  } while (size > 20);
-  ctx.fillText(name, 600, 930);
-  ctx.font = '27px Georgia, "Microsoft YaHei", serif';
-  ctx.fillStyle = "#b5bcb4";
-  const words =
-    language === "zh"
-      ? Array.from(commentary)
-      : commentary.split(" ").map((x) => x + " ");
-  let line = "",
-    y = 1060;
-  for (const word of words) {
-    if (ctx.measureText(line + word).width > 900) {
-      ctx.fillText(line.trim(), 600, y);
-      y += 48;
-      line = word;
-    } else line += word;
-  }
-  if (line) ctx.fillText(line.trim(), 600, y);
-  ctx.font = '22px Georgia, "Microsoft YaHei", serif';
-  ctx.fillStyle = "#c6b68b";
-  ctx.fillText(
-    language === "zh"
-      ? assessed
-        ? "测评倾向 · 非官方同人作品"
-        : "自选身份 · 非官方同人作品"
-      : assessed
-        ? "ASSESSMENT AFFINITY · UNOFFICIAL FAN WORK"
-        : "CHOSEN IDENTITY · UNOFFICIAL FAN WORK",
-    600,
-    1410,
+  const canvas = await createIdentityCardCanvas(
+    path,
+    nickname,
+    commentary,
+    language,
+    assessed,
   );
   return new Promise<Blob>((resolve, reject) =>
     canvas.toBlob(

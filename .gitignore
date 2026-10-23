@@ -35,3 +35,10 @@ lerna-debug.log*
 .cache
 .temp
 *.tsbuildinfo
+.npm-cache/
+.local-data/
+test-results/
+playwright-report/
+
+# Local browser verification screenshots
+docs/screenshots/

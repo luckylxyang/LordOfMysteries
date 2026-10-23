@@ -1,38 +1,53 @@
-import { Routes, Route } from 'react-router-dom'
-import { LanguageProvider } from './i18n/LanguageContext'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import FogBottom from './components/FogBottom'
-import Home from './pages/Home'
-import Quiz from './pages/Quiz'
-import Result from './pages/Result'
-import Directory from './pages/Directory'
-import Responder from './pages/Responder'
-import PlotSearch from './pages/PlotSearch'
-import AuthCallback from './pages/AuthCallback'
-import './App.css'
+import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { LanguageProvider } from "./i18n/LanguageContext";
+import { ArchiveProvider } from "./state/archive";
+import { Shell } from "./components/Mystic";
+import AtlasHome from "./pages/AtlasHome";
+import Atlas from "./pages/Atlas";
+import PathwayDetail from "./pages/PathwayDetail";
+import Compare from "./pages/Compare";
+import Assessment from "./pages/Assessment";
+import Identity from "./pages/Identity";
+import Profile from "./pages/Profile";
+import SearchArchive from "./pages/SearchArchive";
+import "./experience.css";
 
 function App() {
   return (
     <LanguageProvider>
-      <div className="app">
-        <Header />
-        <main className="main-content">
+      <ArchiveProvider>
+        <Shell>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/quiz" element={<Quiz />} />
-            <Route path="/result/:pathwayId" element={<Result />} />
-            <Route path="/directory" element={<Directory />} />
-            <Route path="/responder" element={<Responder />} />
-            <Route path="/plot-search" element={<PlotSearch />} />
-            <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route path="/" element={<AtlasHome />} />
+            <Route path="/quiz" element={<Assessment />} />
+            <Route path="/result/:pathwayId" element={<Identity />} />
+            <Route path="/directory" element={<Atlas />} />
+            <Route path="/pathways/:id" element={<PathwayDetail />} />
+            <Route path="/compare" element={<Compare />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/responder" element={<Navigate to="/" replace />} />
+            <Route path="/plot-search" element={<SearchArchive />} />
+            <Route path="/feedback" element={<Navigate to="/" replace />} />
+            <Route
+              path="/auth/callback"
+              element={<Navigate to="/profile" replace />}
+            />
+            <Route
+              path="*"
+              element={
+                <div className="empty-state">
+                  <h1>404 · Lost in the fog</h1>
+                  <Link className="button primary" to="/">
+                    返回灰雾之上 / Return home
+                  </Link>
+                </div>
+              }
+            />
           </Routes>
-        </main>
-        <Footer />
-        <FogBottom />
-      </div>
+        </Shell>
+      </ArchiveProvider>
     </LanguageProvider>
-  )
+  );
 }
 
-export default App
+export default App;

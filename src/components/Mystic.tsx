@@ -19,6 +19,7 @@ import { useArchive } from "../state/archive";
 import { recordVisit } from "../utils/telemetry";
 import { pathwayLabel, text } from "../domain/exploration";
 import { glyphFrame, pathwayGlyph } from "../data/pathwayGlyphs";
+import { Atmosphere } from "./Atmosphere";
 
 export function Glyph({
   id = "fool",
@@ -435,11 +436,7 @@ export function Shell({ children }: { children: ReactNode }) {
   }, [location.pathname]);
   return (
     <>
-      <div className="atmosphere" aria-hidden="true">
-        <div className="mist mist-one" />
-        <div className="mist mist-two" />
-        <div className="grain" />
-      </div>
+      <Atmosphere />
       <a className="skip-link" href="#main">
         {text(language, "跳到主要内容", "Skip to content")}
       </a>

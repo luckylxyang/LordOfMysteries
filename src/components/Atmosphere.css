@@ -1,0 +1,159 @@
+/* Gray fog, a distant crimson moon, and the traces of a ritual manuscript. */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 78% 8%, #39202d55, transparent 42%),
+    radial-gradient(ellipse at 12% 80%, #313a4833, transparent 55%),
+    linear-gradient(155deg, #10121b, #0c0f16 55%, #141720);
+}
+.crimson-halo {
+  position: absolute;
+  width: 620px;
+  height: 620px;
+  right: -160px;
+  top: -265px;
+  background: radial-gradient(
+    circle,
+    #a44a5033,
+    #7d35411a 30%,
+    transparent 67%
+  );
+}
+.crimson-moon {
+  position: absolute;
+  width: clamp(130px, 15vw, 220px);
+  right: max(5%, calc((100vw - 1380px) / 2));
+  top: 115px;
+  opacity: 0.75;
+  transform: rotate(-18deg);
+}
+.ritual-palimpest {
+  position: absolute;
+  width: min(74vw, 1050px);
+  height: auto;
+  top: -390px;
+  left: -340px;
+  color: #b9a582;
+  opacity: 0.18;
+  transform: rotate(-12deg);
+}
+.veiled-arcade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+.mist {
+  position: absolute;
+  width: 140%;
+  height: 65%;
+  left: -20%;
+  background:
+    radial-gradient(ellipse 36% 18% at 25% 48%, #a6acb525, transparent 75%),
+    radial-gradient(ellipse 43% 17% at 70% 60%, #848f9f20, transparent 75%),
+    radial-gradient(ellipse 30% 14% at 90% 40%, #b5adb51a, transparent 70%);
+  filter: blur(24px);
+  animation: gray-fog-drift 48s ease-in-out infinite alternate;
+}
+.mist-one {
+  bottom: -12%;
+}
+.mist-two {
+  bottom: 5%;
+  opacity: 0.65;
+  transform: scaleX(-1);
+  animation-name: gray-fog-return;
+  animation-duration: 64s;
+}
+.mist-three {
+  top: 2%;
+  left: 10%;
+  opacity: 0.4;
+  animation-duration: 72s;
+}
+.spiritual-dust {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background-image:
+    radial-gradient(1px 1px at 12% 23%, #c1b399 80%, transparent),
+    radial-gradient(1px 1px at 87% 40%, #c1b399 80%, transparent),
+    radial-gradient(1px 1px at 47% 12%, #8997af 80%, transparent),
+    radial-gradient(1px 1px at 7% 67%, #8997af 80%, transparent),
+    radial-gradient(1px 1px at 73% 76%, #c1b399 80%, transparent);
+  background-size: 750px 630px;
+}
+.atmosphere-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      #080a1044,
+      transparent 22%,
+      transparent 80%,
+      #080a1044
+    ),
+    radial-gradient(ellipse at 45% 38%, #0c0f1633 10%, transparent 65%),
+    linear-gradient(0deg, #0b0d15aa, transparent 28%);
+}
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.4' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@keyframes gray-fog-drift {
+  from {
+    transform: translate3d(-4%, 0, 0);
+  }
+  to {
+    transform: translate3d(5%, -3%, 0);
+  }
+}
+@keyframes gray-fog-return {
+  from {
+    transform: scaleX(-1) translate3d(5%, 0, 0);
+  }
+  to {
+    transform: scaleX(-1) translate3d(-4%, 3%, 0);
+  }
+}
+@media (max-width: 760px) {
+  .crimson-moon {
+    width: 145px;
+    top: 150px;
+    right: -20px;
+    opacity: 0.6;
+  }
+  .crimson-halo {
+    top: -70px;
+    right: -320px;
+  }
+  .ritual-palimpest {
+    width: 640px;
+    top: -360px;
+    left: -400px;
+    opacity: 0.14;
+  }
+  .veiled-arcade {
+    opacity: 0.45;
+  }
+  .mist {
+    filter: blur(18px);
+  }
+}
+/* Keep the complete composition when motion is reduced, with no drifting. */
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere .mist {
+    animation: none;
+  }
+}
+html[data-motion="reduced"] .atmosphere .mist {
+  animation: none;
+}

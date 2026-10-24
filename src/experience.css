@@ -1,14 +1,14 @@
 :root {
   font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
   color: #e6e8de;
-  background: #0c1617;
+  background: #0c0f16;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   --gold: #c8b381;
-  --muted: #a0afa9;
-  --line: #acb8a322;
-  --panel: #122021;
+  --muted: #a6abb6;
+  --line: #b4b1aa26;
+  --panel: #151923;
   --serif: "Noto Serif SC", "Songti SC", SimSun, Georgia, serif;
   --path-color: #b5aa83;
   color-scheme: dark;
@@ -17,6 +17,7 @@
   box-sizing: border-box;
 }
 body {
+  isolation: isolate;
   margin: 0;
   min-width: 320px;
 }
@@ -107,42 +108,6 @@ small {
 ::selection {
   background: #b8a575;
   color: #0b1716;
-}
-.atmosphere {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse at 70% 15%, #26342c66, transparent 55%),
-    linear-gradient(160deg, #0c1617, #101d1d 60%, #0b1516);
-}
-.mist {
-  position: absolute;
-  width: 90vw;
-  height: 70vh;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, #a7c7bc0a, transparent 65%);
-  filter: blur(35px);
-  animation: drift 32s ease-in-out infinite alternate;
-  will-change: transform;
-}
-.mist-one {
-  top: 8%;
-  left: 10%;
-}
-.mist-two {
-  bottom: -10%;
-  left: -30%;
-  animation-direction: alternate-reverse;
-  animation-duration: 45s;
-}
-.grain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.09;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.4' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .site-header {
   max-width: 1440px;
